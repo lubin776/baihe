@@ -1,0 +1,41 @@
+name: Sync Code from Gitee (No History)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'   # 可选：每天 UTC 2 点自动同步
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v4
+
+      - name: Shallow clone Gitee repo (code only)
+        run: |
+          git clone --depth=1 https://gitee.com/xiayede/tvbox.git gitee-tmp
+
+      - name: Overwrite files (keep .github)
+        run: |
+          # 删除当前仓库所有文件，但保留 .github
+          find . -maxdepth 1 ! -name '.github' ! -name '.' -exec rm -rf {} +
+
+          # 复制 Gitee 最新代码
+          cp -r gitee-tmp/* .
+
+          # 复制隐藏文件（如 .gitignore）
+          cp -r gitee-tmp/.[!.]* . 2>/dev/null || true
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .
+          git commit -m "Sync code from Gitee (no history)" || echo "No changes"
+          git push
