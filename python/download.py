@@ -18,14 +18,16 @@ DOWNLOAD_URL = "https://mpimg.cn/down.php/90b41102f9f0c1f05f9f13ff0d36ba43.zip"
 SAVE_DIR = "zip"
 
 # 文件名（可写死，也可用下方按日期自动命名）
-FILENAME = "tvboxqq.zip"          # 例如：tvboxqq.zip
-# FILENAME = time.strftime("tvbox_%Y%m%d_%H%M%S.zip")  # 按时间命名（需要时开启）
+FILENAME = "tvboxqq.zip"
+# FILENAME = time.strftime("tvbox_%Y%m%d_%H%M%S.zip")
 
 # 下载完成后是否自动解压（True / False）
-EXTRACT = False
+EXTRACT = True              # ← 改成 True
+
+# 解压目标目录（相对于仓库根目录），"." 表示仓库根目录
+EXTRACT_DIR = "."           # ← 新增：解压到根目录
 # ============================================================
 
-# 最终完整保存路径
 SAVE_PATH = os.path.join(SAVE_DIR, FILENAME)
 
 TVBOX_UAS = [
@@ -124,9 +126,11 @@ def download(url, save_path):
             if EXTRACT:
                 import zipfile
                 try:
+                    # 解压目标：EXTRACT_DIR，"." 表示仓库根目录
+                    os.makedirs(EXTRACT_DIR, exist_ok=True)
                     with zipfile.ZipFile(save_path, 'r') as z:
-                        z.extractall(SAVE_DIR)
-                    print(f"     📦 已解压到: {SAVE_DIR}")
+                        z.extractall(EXTRACT_DIR)
+                    print(f"     📦 已解压到: {os.path.abspath(EXTRACT_DIR)}")
                 except zipfile.BadZipFile:
                     print(f"     ⚠️ 解压失败：文件不是有效 ZIP")
                     return False
@@ -149,7 +153,7 @@ if __name__ == "__main__":
     print("=" * 60)
     print(f"  链接: {DOWNLOAD_URL}")
     print(f"  保存: {SAVE_PATH}")
-    print(f"  解压: {'是' if EXTRACT else '否'}")
+    print(f"  解压: {'是' if EXTRACT else '否'} -> {EXTRACT_DIR}")
     print("=" * 60)
 
     if download(DOWNLOAD_URL, SAVE_PATH):
