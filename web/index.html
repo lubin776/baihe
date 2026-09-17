@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TVBox 接口解密 / 格式化</title>
+<style>
+  :root { --bg:#0f1115; --box:#1a1d24; --line:#2a2f3a; --txt:#e6e6e6; --pri:#4f8cff; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,"PingFang SC",Consolas,monospace;
+         background:var(--bg); color:var(--txt); padding:20px; }
+  h1 { font-size:18px; margin:0 0 12px; }
+  textarea, pre {
+    width:100%; background:var(--box); color:var(--txt);
+    border:1px solid var(--line); border-radius:8px; padding:12px;
+    font-family:Consolas,Monaco,monospace; font-size:13px; line-height:1.5;
+  }
+  textarea { height:90px; resize:vertical; margin-bottom:10px; }
+  pre { white-space:pre-wrap; word-break:break-all; min-height:200px; max-height:60vh; overflow:auto; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  button {
+    background:var(--pri); color:#fff; border:0; border-radius:6px;
+    padding:9px 16px; cursor:pointer; font-size:14px;
+  }
+  button.ghost { background:#333a47; }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .tip { font-size:12px; color:#9aa4b2; margin:6px 0; }
+  .err { color:#ff6b6b; }
+  .ok { color:#36d399; }
+</style>
+</head>
+<body>
+
+<h1>📺 TVBox 接口解密 + JSON 格式化</h1>
+
+<textarea id="urlInput" placeholder="粘贴 TVBox 接口地址，例如：
+https://xxx.com/tvbox.json"></textarea>
+
+<div class="row">
+  <button id="decodeBtn">解密并格式化</button>
+  <button id="copyAllBtn" class="ghost">复制全部</button>
+  <button id="clearBtn" class="ghost">清空</button>
+</div>
+
+<div class="tip">
+  提示：直接用鼠标选中 <code>pre</code> 里的某一段，按 <kbd>Ctrl/Cmd+C</kbd> 即可复制部分内容。
+</div>
+
+<pre id="output">// 输出结果会显示在这里</pre>
+<div id="status" class="tip"></div>
+
+<script>
+const API_BASE = "https://feiyangdigital.v1.mk/api/jiemi.php?url=";
+
+const $ = id => document.getElementById(id);
+const urlInput = $("urlInput");
+const output = $("output");
+const status = $("status");
+
+// 去掉 // 整行注释 + BOM + 空白
+function stripLineComments(raw) {
+  return raw
+    .replace(/^/, "")
+    .split("\n")
+    .filter(line => !/^\s*\/\//.test(line)) // 删掉整行 //
+    .join("\n")
+    .trim();
+}
+
+// 尝试提取第一个 { 到最后一个 } 的 JSON 块
+function extractJsonBlock(text) {
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if (start === -1 || end === -1 || end < start) return text;
+  return text.slice(start, end + 1);
+}
+
+async function decode() {
+  const url = urlInput.value.trim();
+  if (!url) return setStatus("请先粘贴接口地址", "err");
+
+  setStatus("请求解密接口中…");
+  $("decodeBtn").disabled = true;
+
+  try {
+    const target = API_BASE + encodeURIComponent(url);
+    const res = await fetch(target, { redirect: "follow" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+
+    let text = await res.text();
+    text = stripLineComments(text);
+    text = extractJsonBlock(text);
+
+    const obj = JSON.parse(text);              // 校验是否合法 JSON
+    const pretty = JSON.stringify(obj, null, 2);
+    output.textContent = pretty;
+    setStatus("✅ 解密成功，已格式化（// 注释已删除）", "ok");
+  } catch (e) {
+    output.textContent = "";
+    setStatus("❌ 失败：" + e.message, "err");
+  } finally {
+    $("decodeBtn").disabled = false;
+  }
+}
+
+function setStatus(msg, cls) {
+  status.textContent = msg;
+  status.className = "tip " + (cls || "");
+}
+
+$("decodeBtn").onclick = decode;
+
+$("copyAllBtn").onclick = async () => {
+  if (!output.textContent.trim()) return;
+  try {
+    await navigator.clipboard.writeText(output.textContent);
+    setStatus("✅ 已复制全部", "ok");
+  } catch {
+    // 降级方案
+    const range = document.createRange();
+    range.selectNodeContents(output);
+    const sel = window.getSelection();
+    sel.removeAllRanges(); sel.addRange(range);
+    document.execCommand("copy");
+    sel.removeAllRanges();
+    setStatus("✅ 已复制（兼容模式）", "ok");
+  }
+};
+
+$("clearBtn").onclick = () => {
+  urlInput.value = "";
+  output.textContent = "";
+  setStatus("");
+};
+</script>
+
+</body>
+</html>
