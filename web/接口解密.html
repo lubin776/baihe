@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVBox 接口解密工具</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#f5f5f5;--card:#fff;--text:#333;--border:#ddd;
+    --primary:#4a90d9;--primary-hover:#3a7bc8;--success:#67c23a;
+    --danger:#f56c6c;--radius:8px;--shadow:0 2px 12px rgba(0,0,0,.08)
+  }
+  [data-theme="dark"]{
+    --bg:#1a1a2e;--card:#16213e;--text:#e0e0e0;--border:#0f3460;
+    --primary:#e94560;--primary-hover:#ff6b81;--shadow:0 2px 12px rgba(0,0,0,.3)
+  }
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--text);min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;padding:16px;
+    transition:background .3s,color .3s
+  }
+  .container{max-width:720px;width:100%}
+  .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+  .header h1{font-size:1.4rem;font-weight:600}
+  .theme-toggle{
+    background:none;border:1px solid var(--border);color:var(--text);
+    padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.85rem;
+    transition:all .3s
+  }
+  .theme-toggle:hover{border-color:var(--primary);color:var(--primary)}
+  .card{
+    background:var(--card);border-radius:var(--radius);padding:20px;
+    box-shadow:var(--shadow);margin-bottom:16px;transition:background .3s
+  }
+  label{display:block;font-size:.9rem;font-weight:500;margin-bottom:8px;opacity:.85}
+  input[type="text"]{
+    width:100%;padding:12px 14px;border:1px solid var(--border);
+    border-radius:var(--radius);background:var(--bg);color:var(--text);
+    font-size:.95rem;outline:none;transition:border .3s
+  }
+  input[type="text"]:focus{border-color:var(--primary)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:12px 28px;border:none;border-radius:var(--radius);
+    font-size:.95rem;font-weight:500;cursor:pointer;
+    transition:all .25s;user-select:none
+  }
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-primary:hover{background:var(--primary-hover);transform:translateY(-1px)}
+  .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .btn-outline{
+    background:none;border:1px solid var(--border);color:var(--text);
+    padding:8px 18px;font-size:.85rem
+  }
+  .btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  textarea{
+    width:100%;min-height:260px;padding:14px;
+    border:1px solid var(--border);border-radius:var(--radius);
+    background:var(--bg);color:var(--text);font-size:.85rem;
+    font-family:Consolas,"Courier New",monospace;line-height:1.6;
+    resize:vertical;outline:none;transition:border .3s
+  }
+  textarea:focus{border-color:var(--primary)}
+  .status{
+    margin-top:12px;font-size:.85rem;min-height:22px;
+    display:flex;align-items:center;gap:6px
+  }
+  .status.success{color:var(--success)}
+  .status.error{color:var(--danger)}
+  .status.loading{color:var(--primary)}
+  .options{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+  .options label{display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:400;cursor:pointer}
+  .options input[type="checkbox"]{accent-color:var(--primary);width:16px;height:16px}
+  .footer{text-align:center;font-size:.75rem;opacity:.5;margin-top:24px}
+  @media(max-width:480px){
+    .header h1{font-size:1.15rem}
+    .card{padding:14px}
+    textarea{min-height:200px}
+    .btn{padding:11px 20px;font-size:.9rem}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🔓 TVBox 接口解密工具</h1>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 暗色</button>
+  </div>
+
+  <div class="card">
+    <label for="apiUrl">接口地址</label>
+    <input type="text" id="apiUrl" placeholder="https://example.com/api.json" inputmode="url">
+    <div class="options">
+      <label><input type="checkbox" id="formatJson" checked> 自动格式化 JSON</label>
+      <label><input type="checkbox" id="stripComments" checked> 删除注释</label>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="decryptBtn" onclick="decrypt()">🚀 解密</button>
+      <button class="btn btn-outline" onclick="clearAll()">清空</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="card">
+    <label for="output">解密结果</label>
+    <textarea id="output" placeholder="解密结果将显示在这里..." readonly></textarea>
+    <div class="actions">
+      <button class="btn btn-outline" id="copyBtn" onclick="copyResult()">📋 复制结果</button>
+    </div>
+  </div>
+
+  <div class="footer">纯前端 · 数据不经过本站 · 解密依赖远程接口</div>
+</div>
+
+<script>
+const DECRYPT_API = 'https://feiyangdigital.v1.mk/api/jiemi.php?url=';
+
+// 主题切换
+function toggleTheme(){
+  const body = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  if(body.getAttribute('data-theme') === 'dark'){
+    body.removeAttribute('data-theme');
+    btn.textContent = '🌙 暗色';
+    localStorage.setItem('theme','light');
+  } else {
+    body.setAttribute('data-theme','dark');
+    btn.textContent = '☀️ 亮色';
+    localStorage.setItem('theme','dark');
+  }
+}
+
+// 初始化主题
+(function(){
+  const saved = localStorage.getItem('theme');
+  if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+    document.documentElement.setAttribute('data-theme','dark');
+    document.getElementById('themeToggle').textContent = '☀️ 亮色';
+  }
+})();
+
+// 删除注释 + 格式化 JSON
+function processResult(text){
+  const doStrip = document.getElementById('stripComments').checked;
+  const doFormat = document.getElementById('formatJson').checked;
+
+  if(!doStrip && !doFormat) return text;
+
+  let cleaned = text;
+
+  if(doStrip){
+    // 删除多行注释 /* ... */
+    cleaned = cleaned.replace(/\/\*[\s\S]*?\*\//g, '');
+    // 删除单行注释 // ... （不误伤 http:// https://）
+    cleaned = cleaned.replace(/(^|[^:]\/\/)[^\n\r]*/g, function(match, p1){
+      return p1;
+    });
+  }
+
+  if(doFormat){
+    try{
+      const obj = JSON.parse(cleaned);
+      return JSON.stringify(obj, null, 2);
+    } catch(e){
+      // 解析失败，返回清理后的原文
+      return cleaned.trim();
+    }
+  }
+
+  return cleaned.trim();
+}
+
+// 解密
+async function decrypt(){
+  const url = document.getElementById('apiUrl').value.trim();
+  const btn = document.getElementById('decryptBtn');
+  const status = document.getElementById('status');
+  const output = document.getElementById('output');
+
+  if(!url){
+    status.className = 'status error';
+    status.textContent = '⚠️ 请输入接口地址';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 解密中...';
+  status.className = 'status loading';
+  status.textContent = '正在请求解密接口...';
+  output.value = '';
+
+  try{
+    const res = await fetch(DECRYPT_API + encodeURIComponent(url), {
+      method: 'GET',
+      headers: {'Accept': 'text/plain, application/json'}
+    });
+
+    if(!res.ok){
+      throw new Error('HTTP ' + res.status + ' ' + res.statusText);
+    }
+
+    const data = await res.text();
+    const processed = processResult(data);
+
+    output.value = processed;
+    status.className = 'status success';
+    status.textContent = '✅ 解密成功 · ' + processed.length + ' 字符';
+  } catch(e){
+    status.className = 'status error';
+    status.textContent = '❌ 解密失败：' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 解密';
+  }
+}
+
+// 复制
+async function copyResult(){
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+  if(!output.value){
+    status.className = 'status error';
+    status.textContent = '⚠️ 没有可复制的内容';
+    return;
+  }
+  try{
+    await navigator.clipboard.writeText(output.value);
+    status.className = 'status success';
+    status.textContent = '📋 已复制到剪贴板';
+  } catch(e){
+    // fallback
+    output.select();
+    document.execCommand('copy');
+    status.className = 'status success';
+    status.textContent = '📋 已复制（兼容模式）';
+  }
+}
+
+// 清空
+function clearAll(){
+  document.getElementById('apiUrl').value = '';
+  document.getElementById('output').value = '';
+  document.getElementById('status').textContent = '';
+}
+
+// 回车快捷键
+document.getElementById('apiUrl').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') decrypt();
+});
+</script>
+</body>
+</html>
