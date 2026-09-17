@@ -1,0 +1,92 @@
+[
+  {
+    "name": "推荐目1",
+    "fmt": "推荐",
+    "url": "https://w.smtr8.cc/s/W9RILEB323HH",
+    "id": 1
+  },
+  {
+    "name": "51zmt-xml格式",
+    "fmt": "XMLTV",
+    "url": "http://epg.51zmt.top:8000/e.xml",
+    "id": 2
+  },
+  {
+    "name": "肥羊EPG-DIYP",
+    "fmt": "DIYP",
+    "url": "https://epg.v1.mk/json",
+    "id": 3
+  },
+  {
+    "name": "肥羊EPG-xml",
+    "fmt": "XMLTV",
+    "url": "https://epg.v1.mk/fy.xml",
+    "id": 4
+  },
+  {
+    "name": "FMM-xml格式",
+    "fmt": "XMLTV",
+    "url": "https://live.fanmingming.com/e.xml",
+    "id": 5
+  },
+  {
+    "name": "0472-DIYP",
+    "fmt": "DIYP",
+    "url": "https://epg.0472.org/",
+    "id": 6
+  },
+  {
+    "name": "112114转发-xml",
+    "fmt": "XMLTV",
+    "url": "http://cdn.1678520.xyz/xml",
+    "id": 7
+  },
+  {
+    "name": "112114eu-xml",
+    "fmt": "XMLTV",
+    "url": "https://epg.112114.eu.org/pp.xml",
+    "id": 8
+  },
+  {
+    "name": "112114free-xml",
+    "fmt": "XMLTV",
+    "url": "https://epg.112114.free.hr/pp.xml",
+    "id": 9
+  },
+  {
+    "name": "euepg接口",
+    "fmt": "DIYP",
+    "url": "https://epg.112114.eu.org/",
+    "id": 10
+  },
+  {
+    "name": "112114-DIYP",
+    "fmt": "DIYP",
+    "url": "https://diy.112114.xyz",
+    "id": 11
+  },
+  {
+    "name": "112114xyz",
+    "fmt": "XMLTV",
+    "url": "http://epg.112114.xyz",
+    "id": 12
+  },
+  {
+    "name": "推荐目2",
+    "fmt": "推荐",
+    "url": "https://w.zr5dd.cc/s/W9RILEB323HH",
+    "id": 13
+  },
+  {
+    "name": "推荐目3",
+    "fmt": "推荐",
+    "url": "https://w.q5ebc.cc/s/W9RILEB323HH",
+    "id": 14
+  },
+  {
+    "name": "推荐目4",
+    "fmt": "推荐",
+    "url": "https://w.nuyyzz.com/s/W9RILEB323HH",
+    "id": 15
+  }
+]

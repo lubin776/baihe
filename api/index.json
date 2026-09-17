@@ -1,0 +1,14 @@
+{
+  "updated": "2026-09-17 22:50:01",
+  "base": "https://tvbox.moliys.icu",
+  "counts": {
+    "interfaces": 48,
+    "live": 90,
+    "packages": 7
+  },
+  "endpoints": {
+    "interfaces": "https://tvbox.moliys.icu/api/interfaces.json",
+    "live": "https://tvbox.moliys.icu/api/live.json",
+    "packages": "https://tvbox.moliys.icu/api/packages.json"
+  }
+}

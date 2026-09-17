@@ -1,0 +1,51 @@
+[
+  {
+    "name": "【新手必备】2159个综合书源",
+    "count": 2159,
+    "desc": "强烈推荐首次使用",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/250422.json",
+    "id": 1
+  },
+  {
+    "name": "【番茄小说】专属书源",
+    "count": 1,
+    "desc": "番茄小说专用",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/250410.json",
+    "id": 2
+  },
+  {
+    "name": "【69书源】起点小说专属源",
+    "count": 1,
+    "desc": "部分地区可能需要网络加速",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/250412.json",
+    "id": 3
+  },
+  {
+    "name": "【超级精品】997个高质精选书源",
+    "count": 997,
+    "desc": "大佬精心整理",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/250415.json",
+    "id": 4
+  },
+  {
+    "name": "【三五中文网】书源",
+    "count": 1,
+    "desc": "",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/250416.json",
+    "id": 5
+  },
+  {
+    "name": "【漫画党福音】83个精品漫画书源",
+    "count": 83,
+    "desc": "",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/250424.json",
+    "id": 6
+  },
+  {
+    "name": "【有声听书】49个高质量听书书源",
+    "count": 49,
+    "desc": "听书专用",
+    "url": "https://gcore.jsdelivr.net/gh/yuedu520/yuedu/2504241.json",
+    "id": 7
+  }
+]

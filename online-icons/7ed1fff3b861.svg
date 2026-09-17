@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="磁力帝">
+  <rect width="64" height="64" rx="18" fill="#e8f5f0"/>
+  <path d="M17 27v11c0 12 6.7 19 15 19s15-7 15-19V27" fill="none" stroke="#176b5b" stroke-width="8" stroke-linecap="round"/>
+  <path d="M17 27v8M47 27v8" fill="none" stroke="#ef816b" stroke-width="8" stroke-linecap="round"/>
+  <path d="m18.5 21 2.8-12 9.7 7.2L38.6 7l5.1 12.3L41.8 24H21z" fill="#f2b84b" stroke="#176b5b" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="21" cy="9" r="2.2" fill="#ef816b"/><circle cx="38.6" cy="7" r="2.2" fill="#ef816b"/>
+  <path d="M25 21h13" stroke="#176b5b" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

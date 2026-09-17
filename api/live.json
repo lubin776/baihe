@@ -1,0 +1,906 @@
+{
+  "updated": "2026-09-17 22:50:01",
+  "count": 90,
+  "items": [
+    {
+      "name": "Kimentanm",
+      "file": "Kimentanm.m3u",
+      "date": "20260917",
+      "size": "21.4K",
+      "source": "饭太硬4线",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Kimentanm.m3u",
+      "sourceUrl": "https://gh.927223.xyz/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u"
+    },
+    {
+      "name": "综合直播",
+      "file": "综合直播.php",
+      "date": "20260917",
+      "size": "41.9K",
+      "source": "饭太硬4线",
+      "ua": "bingcha/1.1 (mianfeifenxiang)",
+      "url": "https://tvbox.moliys.icu/tvbox/live/综合直播.php",
+      "sourceUrl": "http://193.123.86.190:14888/TV/iptv.php"
+    },
+    {
+      "name": "范明明需开启V6网络",
+      "file": "范明明需开启V6网络.m3u",
+      "date": "20260917",
+      "size": "12.5K",
+      "source": "饭太硬4线",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/范明明需开启V6网络.m3u",
+      "sourceUrl": "https://nos.netease.com/ysf/3d75a78a0fc7ede372c03598d6d10367.m3u"
+    },
+    {
+      "name": "虎牙一起看",
+      "file": "虎牙一起看.m3u",
+      "date": "20260917",
+      "size": "208.6K",
+      "source": "饭太硬4线",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/虎牙一起看.m3u",
+      "sourceUrl": "https://sub.ottiptv.cc/huyayqk.m3u"
+    },
+    {
+      "name": "斗鱼一起看",
+      "file": "斗鱼一起看.m3u",
+      "date": "20260917",
+      "size": "177.2K",
+      "source": "幸福年年",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/斗鱼一起看.m3u",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/douyuyqk.m3u"
+    },
+    {
+      "name": "YY轮播",
+      "file": "YY轮播.m3u",
+      "date": "20260917",
+      "size": "113.6K",
+      "source": "饭太硬4线",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/YY轮播.m3u",
+      "sourceUrl": "https://sub.ottiptv.cc/yylunbo.m3u"
+    },
+    {
+      "name": "Guovin",
+      "file": "Guovin.m3u",
+      "date": "20260917",
+      "size": "387.1K",
+      "source": "菠菜园",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Guovin.m3u",
+      "sourceUrl": "https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u"
+    },
+    {
+      "name": "没4K",
+      "file": "没4K.php",
+      "date": "20260917",
+      "size": "578B",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/没4K.php",
+      "sourceUrl": "https://mpimg.cn/text.php?hash=7265d70b6834cefbddb61bcc2d9c99db"
+    },
+    {
+      "name": "夜空",
+      "file": "夜空.txt",
+      "date": "20260917",
+      "size": "982.4K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/夜空.txt",
+      "sourceUrl": "https://pan.szfx.top/down.php/4f5dad27633e1293d7ef2317ee9c801e.txt"
+    },
+    {
+      "name": "夜空1",
+      "file": "夜空1.txt",
+      "date": "20260917",
+      "size": "120.1K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/夜空1.txt",
+      "sourceUrl": "https://pan.29o.cn/down.php/aa846bceb7a1b4adb0385b1f61b192e8.txt"
+    },
+    {
+      "name": "经典电视剧",
+      "file": "经典电视剧.txt",
+      "date": "20260917",
+      "size": "547.1K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/经典电视剧.txt",
+      "sourceUrl": "https://wp.kayyw.com/f/XOpgIZ/%E7%BB%8F%E5%85%B8%E7%94%B5%E8%A7%86%E5%89%A7.txt"
+    },
+    {
+      "name": "很少",
+      "file": "很少.txt",
+      "date": "20260917",
+      "size": "2.2K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/很少.txt",
+      "sourceUrl": "https://mpimg.cn/down.php/fa04b02ffac54ac877f5250d3d70e494.txt"
+    },
+    {
+      "name": "划了",
+      "file": "划了.txt",
+      "date": "20260917",
+      "size": "112.9K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/划了.txt",
+      "sourceUrl": "https://pan.szfx.top/down.php/dcb0cc6a6935b5e62b2659eba6718471.txt"
+    },
+    {
+      "name": "应该能看",
+      "file": "应该能看.txt",
+      "date": "20260917",
+      "size": "250.0K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/应该能看.txt",
+      "sourceUrl": "https://gh-proxy.org/raw.githubusercontent.com/vinkerq/iptv-api/refs/heads/master/iptv.txt"
+    },
+    {
+      "name": "全球",
+      "file": "全球.jpg",
+      "date": "20260917",
+      "size": "13B",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/全球.jpg",
+      "sourceUrl": "http://xingioe.top/down.php/82d0754d79de3be03e9b63e4d2d96818.jpg"
+    },
+    {
+      "name": "尘墨",
+      "file": "尘墨.php",
+      "date": "20260917",
+      "size": "11.7K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/尘墨.php",
+      "sourceUrl": "https://52xiaobai.cn/ceshi/zb.php"
+    },
+    {
+      "name": "Kimentanm1线",
+      "file": "Kimentanm1线.m3u",
+      "date": "20260917",
+      "size": "21.4K",
+      "source": "嗷呜",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Kimentanm1线.m3u",
+      "sourceUrl": "https://down.nigx.cn/raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u"
+    },
+    {
+      "name": "B站直播",
+      "file": "B站直播.m3u",
+      "date": "20260917",
+      "size": "56.5K",
+      "source": "幸福年年",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/B站直播.m3u",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/bililive.m3u"
+    },
+    {
+      "name": "Yoursmile",
+      "file": "Yoursmile.txt",
+      "date": "20260917",
+      "size": "115.0K",
+      "source": "南风2线",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Yoursmile.txt",
+      "sourceUrl": "https://gh-proxy.org/https://raw.githubusercontent.com/yoursmile66/TVBox/main/live.txt"
+    },
+    {
+      "name": "APTV",
+      "file": "APTV.m3u",
+      "date": "20260917",
+      "size": "21.4K",
+      "source": "真六",
+      "ua": "okhttp/3.15,AptvPlayer/1.4.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/APTV.m3u",
+      "sourceUrl": "https://wget.la/https://github.com/Kimentanm/aptv/raw/master/m3u/iptv.m3u"
+    },
+    {
+      "name": "cluntop",
+      "file": "cluntop.m3u",
+      "date": "20260917",
+      "size": "1.2M",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/cluntop.m3u",
+      "sourceUrl": "https://clun.top/lib/iptv.m3u"
+    },
+    {
+      "name": "cluntoptest",
+      "file": "cluntoptest.m3u",
+      "date": "20260917",
+      "size": "359.4K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/cluntoptest.m3u",
+      "sourceUrl": "https://clun.top/lib/iptv_test.m3u"
+    },
+    {
+      "name": "歌手直播",
+      "file": "歌手直播.m3u",
+      "date": "20260917",
+      "size": "73.5K",
+      "source": "clun",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/歌手直播.m3u",
+      "sourceUrl": "https://mgtv.ottiptv.cc/mglist.m3u"
+    },
+    {
+      "name": "Kimentanm2线",
+      "file": "Kimentanm2线.m3u",
+      "date": "20260917",
+      "size": "21.4K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Kimentanm2线.m3u",
+      "sourceUrl": "https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u"
+    },
+    {
+      "name": "suxuang",
+      "file": "suxuang.m3u",
+      "date": "20260917",
+      "size": "262.3K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/suxuang.m3u",
+      "sourceUrl": "https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv4.m3u"
+    },
+    {
+      "name": "Guovin1线",
+      "file": "Guovin1线.m3u",
+      "date": "20260917",
+      "size": "387.1K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Guovin1线.m3u",
+      "sourceUrl": "https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u"
+    },
+    {
+      "name": "mlzlzj",
+      "file": "mlzlzj.m3u",
+      "date": "20260917",
+      "size": "504.3K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/mlzlzj.m3u",
+      "sourceUrl": "https://raw.githubusercontent.com/mlzlzj/TV/main/output/result.m3u"
+    },
+    {
+      "name": "gambiarras",
+      "file": "gambiarras.m3u",
+      "date": "20260917",
+      "size": "365.7K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/gambiarras.m3u",
+      "sourceUrl": "https://raw.githubusercontent.com/gambiarras/legal-iptv/refs/heads/main/playlist.m3u"
+    },
+    {
+      "name": "live",
+      "file": "live.txt",
+      "date": "20260917",
+      "size": "258.5K",
+      "source": "聚玩",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/live.txt",
+      "sourceUrl": "http://xhztv.top/xhz/live.txt"
+    },
+    {
+      "name": "驸马影视电信专线",
+      "file": "驸马影视电信专线.m3u",
+      "date": "20260917",
+      "size": "17.0K",
+      "source": "驸马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/驸马影视电信专线.m3u",
+      "sourceUrl": "http://fmys.top/lib/live.m3u"
+    },
+    {
+      "name": "驸马影视移动专线",
+      "file": "驸马影视移动专线.m3u",
+      "date": "20260917",
+      "size": "21.0K",
+      "source": "驸马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/驸马影视移动专线.m3u",
+      "sourceUrl": "http://fmys.top/lib/yidong.m3u"
+    },
+    {
+      "name": "咪咕",
+      "file": "咪咕.txt",
+      "date": "20260917",
+      "size": "469B",
+      "source": "小马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/咪咕.txt",
+      "sourceUrl": "https://develop202.github.io/migu_video/interface.txt"
+    },
+    {
+      "name": "手动不知何时更新",
+      "file": "手动不知何时更新.txt",
+      "date": "20260917",
+      "size": "663.8K",
+      "source": "小马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/手动不知何时更新.txt",
+      "sourceUrl": "https://szyyds.cn/tv/live/x.txt"
+    },
+    {
+      "name": "有效期27年7月",
+      "file": "有效期27年7月.php",
+      "date": "20260917",
+      "size": "6.8K",
+      "source": "小马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/有效期27年7月.php",
+      "sourceUrl": "http://m.szyyds.cn/api.php?token=8664f352657e8b13585bcf0f84fc3512"
+    },
+    {
+      "name": "自动更新",
+      "file": "自动更新.txt",
+      "date": "20260917",
+      "size": "40.2K",
+      "source": "小马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/自动更新.txt",
+      "sourceUrl": "https://z.szyyds.cn/iptv"
+    },
+    {
+      "name": "音乐所",
+      "file": "音乐所.txt",
+      "date": "20260917",
+      "size": "22.2M",
+      "source": "小马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/音乐所.txt",
+      "sourceUrl": "https://szyyds.cn/tv/live/yy.txt"
+    },
+    {
+      "name": "移动",
+      "file": "移动.txt",
+      "date": "20260917",
+      "size": "22.4K",
+      "source": "周J",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/移动.txt",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/ext/移动"
+    },
+    {
+      "name": "联通",
+      "file": "联通.txt",
+      "date": "20260917",
+      "size": "15.2K",
+      "source": "周J",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/联通.txt",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/ext/联通"
+    },
+    {
+      "name": "优选",
+      "file": "优选.txt",
+      "date": "20260917",
+      "size": "9.8K",
+      "source": "周J",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/优选.txt",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/ext/live.txt"
+    },
+    {
+      "name": "线路",
+      "file": "线路.nzk",
+      "date": "20260917",
+      "size": "118.7K",
+      "source": "星微Vip",
+      "ua": "okhttp/3",
+      "url": "https://tvbox.moliys.icu/tvbox/live/线路.nzk",
+      "sourceUrl": "http://rihou.cc:567/gggg.nzk"
+    },
+    {
+      "name": "线路",
+      "file": "线路.txt",
+      "date": "20260917",
+      "size": "469B",
+      "source": "星微Vip",
+      "ua": "okHttp/Mod-1.1.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/线路.txt",
+      "sourceUrl": "https://gh-proxy.com/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt"
+    },
+    {
+      "name": "BMCH",
+      "file": "BMCH.txt",
+      "date": "20260917",
+      "size": "190.6K",
+      "source": "香雅情",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/BMCH.txt",
+      "sourceUrl": "https://play.iptv365.org/香雅情/lives/BMCH.txt"
+    },
+    {
+      "name": "Tianmu",
+      "file": "Tianmu.txt",
+      "date": "20260917",
+      "size": "18.7K",
+      "source": "香雅情",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Tianmu.txt",
+      "sourceUrl": "https://play.iptv365.org/香雅情/lives/Tianmu.txt"
+    },
+    {
+      "name": "幸福年年zb",
+      "file": "幸福年年zb.txt",
+      "date": "20260917",
+      "size": "621.6K",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/幸福年年zb.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/ylzb.txt"
+    },
+    {
+      "name": "轮播直播",
+      "file": "轮播直播.txt",
+      "date": "20260917",
+      "size": "1.1M",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/轮播直播.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/dsj.txt"
+    },
+    {
+      "name": "2500部恐怖片",
+      "file": "2500部恐怖片.txt",
+      "date": "20260917",
+      "size": "230.0K",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/2500部恐怖片.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/电影.txt"
+    },
+    {
+      "name": "短剧直播",
+      "file": "短剧直播.txt",
+      "date": "20260917",
+      "size": "245.8K",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/短剧直播.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/dj.txt"
+    },
+    {
+      "name": "天微",
+      "file": "天微.txt",
+      "date": "20260917",
+      "size": "111.3K",
+      "source": "幸福年年",
+      "ua": "okhttp/3",
+      "url": "https://tvbox.moliys.icu/tvbox/live/天微.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/kjtwzb.txt"
+    },
+    {
+      "name": "Kimentanm3线",
+      "file": "Kimentanm3线.m3u",
+      "date": "20260917",
+      "size": "21.4K",
+      "source": "王二小3线",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Kimentanm3线.m3u",
+      "sourceUrl": "https://ghfast.top/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u"
+    },
+    {
+      "name": "综合直播1线",
+      "file": "综合直播1线.txt",
+      "date": "20260917",
+      "size": "469B",
+      "source": "王二小3线",
+      "ua": "bingcha/1.1 (mianfeifenxiang)",
+      "url": "https://tvbox.moliys.icu/tvbox/live/综合直播1线.txt",
+      "sourceUrl": "https://ghfast.top/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt"
+    },
+    {
+      "name": "综合直播2线",
+      "file": "综合直播2线.txt",
+      "date": "20260917",
+      "size": "106.4K",
+      "source": "东篱",
+      "ua": "bingcha/1.1 (mianfeifenxiang)",
+      "url": "https://tvbox.moliys.icu/tvbox/live/综合直播2线.txt",
+      "sourceUrl": "https://ds65.tv1288.xyz"
+    },
+    {
+      "name": "日后",
+      "file": "日后.nzk",
+      "date": "20260917",
+      "size": "118.7K",
+      "source": "东篱",
+      "ua": "okhttp/3",
+      "url": "https://tvbox.moliys.icu/tvbox/live/日后.nzk",
+      "sourceUrl": "http://rihou.cc:555/gggg.nzk"
+    },
+    {
+      "name": "develop202",
+      "file": "develop202.txt",
+      "date": "20260917",
+      "size": "469B",
+      "source": "东篱",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/develop202.txt",
+      "sourceUrl": "https://gh-proxy.org/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt"
+    },
+    {
+      "name": "EPG直播",
+      "file": "EPG直播.txt",
+      "date": "20260917",
+      "size": "71.5K",
+      "source": "东篱",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/EPG直播.txt",
+      "sourceUrl": "http://gh-proxy.org/https://raw.githubusercontent.com/Wirili/IPTV/main/live.txt"
+    },
+    {
+      "name": "电视直播",
+      "file": "电视直播.txt",
+      "date": "20260917",
+      "size": "105.4K",
+      "source": "东篱",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/电视直播.txt",
+      "sourceUrl": "http://gh-proxy.org/raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt"
+    },
+    {
+      "name": "游魂",
+      "file": "游魂.txt",
+      "date": "20260917",
+      "size": "609B",
+      "source": "东篱",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/游魂.txt",
+      "sourceUrl": "https://www.iyouhun.com/tv/zb"
+    },
+    {
+      "name": "YanG1线",
+      "file": "YanG1线.m3u",
+      "date": "20260917",
+      "size": "26.7K",
+      "source": "东篱",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/YanG1线.m3u",
+      "sourceUrl": "https://gh-proxy.org/https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u"
+    },
+    {
+      "name": "suxuang1线",
+      "file": "suxuang1线.m3u",
+      "date": "20260917",
+      "size": "262.3K",
+      "source": "东篱",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/suxuang1线.m3u",
+      "sourceUrl": "https://gh-proxy.org/https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv4.m3u"
+    },
+    {
+      "name": "develop2022线",
+      "file": "develop2022线.txt",
+      "date": "20260917",
+      "size": "92.3K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/develop2022线.txt",
+      "sourceUrl": "https://ztha.top/TVBox/lib/interface.txt"
+    },
+    {
+      "name": "Kimentanm6线",
+      "file": "Kimentanm6线.m3u",
+      "date": "20260917",
+      "size": "21.4K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Kimentanm6线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/iptv.m3u"
+    },
+    {
+      "name": "挺好直播",
+      "file": "挺好直播.txt",
+      "date": "20260917",
+      "size": "4.6K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/挺好直播.txt",
+      "sourceUrl": "https://ztha.top/TVBox/tv/thtv.txt"
+    },
+    {
+      "name": "MV",
+      "file": "MV.txt",
+      "date": "20260917",
+      "size": "2.1M",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/MV.txt",
+      "sourceUrl": "https://ztha.top/TVBox/tv/MV.txt"
+    },
+    {
+      "name": "范明明需开启V6网络1线",
+      "file": "范明明需开启V6网络1线.m3u",
+      "date": "20260917",
+      "size": "12.5K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/范明明需开启V6网络1线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/3d75a78a0fc7ede372c03598d6d10367.m3u"
+    },
+    {
+      "name": "世界杯",
+      "file": "世界杯.m3u",
+      "date": "20260917",
+      "size": "23.3K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/世界杯.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/fwc.m3u"
+    },
+    {
+      "name": "虎牙一起看2线",
+      "file": "虎牙一起看2线.m3u",
+      "date": "20260917",
+      "size": "227.5K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/虎牙一起看2线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/huyayqk.m3u"
+    },
+    {
+      "name": "斗鱼一起看2线",
+      "file": "斗鱼一起看2线.m3u",
+      "date": "20260917",
+      "size": "174.3K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/斗鱼一起看2线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/douyuyqk.m3u"
+    },
+    {
+      "name": "B站直播1线",
+      "file": "B站直播1线.m3u",
+      "date": "20260917",
+      "size": "27.6K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/B站直播1线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/bililive.m3u"
+    },
+    {
+      "name": "YY轮播2线",
+      "file": "YY轮播2线.m3u",
+      "date": "20260917",
+      "size": "122.6K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/YY轮播2线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/yylunbo.m3u"
+    },
+    {
+      "name": "范明明需开启V6网络",
+      "file": "范明明需开启V6网络.m3u",
+      "date": "20260915",
+      "size": "12.5K",
+      "source": "饭太硬5线",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/范明明需开启V6网络.m3u",
+      "sourceUrl": "https://nos.netease.com/ysf/3d75a78a0fc7ede372c03598d6d10367.m3u"
+    },
+    {
+      "name": "斗鱼一起看",
+      "file": "斗鱼一起看.m3u",
+      "date": "20260915",
+      "size": "177.2K",
+      "source": "幸福年年",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/斗鱼一起看.m3u",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/douyuyqk.m3u"
+    },
+    {
+      "name": "B站直播",
+      "file": "B站直播.m3u",
+      "date": "20260915",
+      "size": "56.5K",
+      "source": "幸福年年",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/B站直播.m3u",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/bililive.m3u"
+    },
+    {
+      "name": "cluntoptest",
+      "file": "cluntoptest.m3u",
+      "date": "20260915",
+      "size": "326.7K",
+      "source": "clun",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/cluntoptest.m3u",
+      "sourceUrl": "https://clun.top/lib/iptv_test.m3u"
+    },
+    {
+      "name": "驸马影视电信专线",
+      "file": "驸马影视电信专线.m3u",
+      "date": "20260915",
+      "size": "17.0K",
+      "source": "驸马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/驸马影视电信专线.m3u",
+      "sourceUrl": "http://fmys.top/lib/live.m3u"
+    },
+    {
+      "name": "驸马影视移动专线",
+      "file": "驸马影视移动专线.m3u",
+      "date": "20260915",
+      "size": "21.0K",
+      "source": "驸马",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/驸马影视移动专线.m3u",
+      "sourceUrl": "http://fmys.top/lib/yidong.m3u"
+    },
+    {
+      "name": "移动",
+      "file": "移动.txt",
+      "date": "20260915",
+      "size": "22.4K",
+      "source": "周J",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/移动.txt",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/ext/移动"
+    },
+    {
+      "name": "联通",
+      "file": "联通.txt",
+      "date": "20260915",
+      "size": "15.2K",
+      "source": "周J",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/联通.txt",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/ext/联通"
+    },
+    {
+      "name": "优选",
+      "file": "优选.txt",
+      "date": "20260915",
+      "size": "31.2K",
+      "source": "周J",
+      "ua": "okhttp/3.15",
+      "url": "https://tvbox.moliys.icu/tvbox/live/优选.txt",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/ext/live.txt"
+    },
+    {
+      "name": "线路",
+      "file": "线路.txt",
+      "date": "20260915",
+      "size": "469B",
+      "source": "星微Vip",
+      "ua": "okHttp/Mod-1.1.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/线路.txt",
+      "sourceUrl": "https://gh-proxy.com/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt"
+    },
+    {
+      "name": "轮播直播",
+      "file": "轮播直播.txt",
+      "date": "20260915",
+      "size": "1.1M",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/轮播直播.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/dsj.txt"
+    },
+    {
+      "name": "2500部恐怖片",
+      "file": "2500部恐怖片.txt",
+      "date": "20260915",
+      "size": "230.0K",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/2500部恐怖片.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/电影.txt"
+    },
+    {
+      "name": "短剧直播",
+      "file": "短剧直播.txt",
+      "date": "20260915",
+      "size": "245.8K",
+      "source": "幸福年年",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/短剧直播.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/dj.txt"
+    },
+    {
+      "name": "天微",
+      "file": "天微.txt",
+      "date": "20260915",
+      "size": "111.3K",
+      "source": "幸福年年",
+      "ua": "okhttp/3",
+      "url": "https://tvbox.moliys.icu/tvbox/live/天微.txt",
+      "sourceUrl": "http://150.158.52.248/tgyg/lib/kjtwzb.txt"
+    },
+    {
+      "name": "范明明需开启V6网络1线",
+      "file": "范明明需开启V6网络1线.m3u",
+      "date": "20260915",
+      "size": "12.5K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/范明明需开启V6网络1线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/3d75a78a0fc7ede372c03598d6d10367.m3u"
+    },
+    {
+      "name": "Kimentanm5线",
+      "file": "Kimentanm5线.m3u",
+      "date": "20260915",
+      "size": "21.4K",
+      "source": "挺好",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/Kimentanm5线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/iptv.m3u"
+    },
+    {
+      "name": "yuan",
+      "file": "yuan.txt",
+      "date": "20260915",
+      "size": "137.9K",
+      "source": "哈吉米",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/yuan.txt",
+      "sourceUrl": "http://wangziduoqing.com/yuan/zb.txt"
+    },
+    {
+      "name": "虎牙一起看1线",
+      "file": "虎牙一起看1线.m3u",
+      "date": "20260915",
+      "size": "227.5K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/虎牙一起看1线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/huyayqk.m3u"
+    },
+    {
+      "name": "斗鱼一起看1线",
+      "file": "斗鱼一起看1线.m3u",
+      "date": "20260915",
+      "size": "174.3K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/斗鱼一起看1线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/douyuyqk.m3u"
+    },
+    {
+      "name": "YY轮播1线",
+      "file": "YY轮播1线.m3u",
+      "date": "20260915",
+      "size": "122.6K",
+      "source": "挺好",
+      "ua": "okHttp/Mod-1.5.0.0",
+      "url": "https://tvbox.moliys.icu/tvbox/live/YY轮播1线.m3u",
+      "sourceUrl": "https://ztha.top/TVBox/lib/yylunbo.m3u"
+    },
+    {
+      "name": "范明明",
+      "file": "范明明.m3u",
+      "date": "20260915",
+      "size": "24.6K",
+      "source": "真六",
+      "ua": "null",
+      "url": "https://tvbox.moliys.icu/tvbox/live/范明明.m3u",
+      "sourceUrl": "https://live.fanmingming.cn/tv/m3u/ipv6.m3u"
+    },
+    {
+      "name": "王子多情",
+      "file": "王子多情",
+      "date": "",
+      "size": "",
+      "source": "",
+      "ua": "",
+      "url": "https://tvbox.moliys.icu/tvbox/live/王子多情",
+      "sourceUrl": "http://wangziduoqing.cn/yuan/zb.txt"
+    }
+  ]
+}

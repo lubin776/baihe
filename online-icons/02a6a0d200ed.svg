@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">白嫖者联盟</title>
+  <desc id="desc">由播放三角、联盟节点与场记板切口组成的青蓝色影视标志</desc>
+  <rect width="1024" height="1024" fill="#080A0F"/>
+  <path d="M340 294V730L750 512L340 294Z" fill="none" stroke="#67E8F9" stroke-width="76" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#67E8F9" stroke="#F7FEFF" stroke-width="20">
+    <circle cx="340" cy="294" r="75"/>
+    <circle cx="340" cy="730" r="75"/>
+    <circle cx="750" cy="512" r="75"/>
+  </g>
+  <g fill="none" stroke="#0891B2" stroke-width="32" stroke-linecap="round">
+    <path d="M460 258L524 216"/>
+    <path d="M540 300L604 258"/>
+  </g>
+</svg>

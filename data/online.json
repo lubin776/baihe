@@ -1,0 +1,142 @@
+[
+  {
+    "name": "饭搭子影视",
+    "desc": "最新热门电影电视剧动漫综艺",
+    "url": "https://fdzys.com/",
+    "icon": "online-icons/0802344fa4f9.png",
+    "id": 1
+  },
+  {
+    "name": "SA视频",
+    "desc": "最新电影电视剧动漫综艺",
+    "url": "https://www.lsjys11.com/",
+    "icon": "online-icons/a5254a075986.ico",
+    "id": 2
+  },
+  {
+    "name": "91毒舌",
+    "desc": "最新Netflix新剧、4K高清（可访问）",
+    "url": "https://www.duse0.com/",
+    "icon": "",
+    "id": 3
+  },
+  {
+    "name": "好好看",
+    "desc": "4K高清Netflix新剧（需梯子）",
+    "url": "https://www.hhkan2.com/",
+    "icon": "",
+    "id": 4
+  },
+  {
+    "name": "IFN",
+    "desc": "为数不多的真4K，部分免费",
+    "url": "https://ifn.watch/register?code=8B1EF6",
+    "icon": "online-icons/a1843927a52d.ico",
+    "id": 5
+  },
+  {
+    "name": "蛋蛋魔法",
+    "desc": "国内外热播剧，有福利伦理片（需梯子）",
+    "url": "https://ddmf.net",
+    "icon": "online-icons/85141a55b6b0.png",
+    "id": 6
+  },
+  {
+    "name": "青空次元",
+    "desc": "网友称最夯动漫在线站",
+    "url": "https://www.sorani.net",
+    "icon": "online-icons/f34d031a58e8.png",
+    "id": 7
+  },
+  {
+    "name": "APP影院",
+    "desc": "国内外热播剧，纯净无广告",
+    "url": "https://www.appmovie.art",
+    "icon": "online-icons/380a8a3fa218.ico",
+    "id": 8
+  },
+  {
+    "name": "Auete影视",
+    "desc": "蓝光超清精品影视，发布页auete.pro",
+    "url": "https://www.aeete.com",
+    "icon": "online-icons/8015905a8a19.ico",
+    "id": 9
+  },
+  {
+    "name": "电影人生",
+    "desc": "高清电影在线观看",
+    "url": "https://dyrs.tv",
+    "icon": "online-icons/f4ba07e6633e.ico",
+    "id": 10
+  },
+  {
+    "name": "黑夜影院",
+    "desc": "综合影视/资源多/无广告",
+    "url": "https://darkvod.com",
+    "icon": "online-icons/dd92be420c30.jpg",
+    "id": 11
+  },
+  {
+    "name": "奈飞工厂",
+    "desc": "最新美剧，无广告（需梯子）",
+    "url": "https://www.netflixgc.com",
+    "icon": "online-icons/0e32cc3eb762.png",
+    "id": 12
+  },
+  {
+    "name": "泥视频",
+    "desc": "热门国剧，更新快，无广告",
+    "url": "https://www.nivod.vip",
+    "icon": "online-icons/719483c2fc8c.png",
+    "id": 13
+  },
+  {
+    "name": "PPnix",
+    "desc": "热门在线影视，速度快/纯净/无广告",
+    "url": "https://www.ppnix.com/cn/",
+    "icon": "online-icons/c133b5fbfa62.ico",
+    "id": 14
+  },
+  {
+    "name": "多瑙影视",
+    "desc": "海外华人在线影院（需梯子）",
+    "url": "https://www.duonaovod.com",
+    "icon": "online-icons/65e3e21ecb3a.png",
+    "id": 15
+  },
+  {
+    "name": "白嫖者联盟",
+    "desc": "热门热播剧，无广告速度快（需梯子）",
+    "url": "https://www.tdgo.shop",
+    "icon": "online-icons/02a6a0d200ed.svg",
+    "id": 16
+  },
+  {
+    "name": "爱电影",
+    "desc": "最新热门电影/电视剧（需梯子）",
+    "url": "https://kuhh4jo.com",
+    "icon": "online-icons/616afc52b4f3.png",
+    "id": 17
+  },
+  {
+    "name": "金牌影视",
+    "desc": "全网VIP资源（需梯子）",
+    "url": "https://www.vv3nwjk.com",
+    "icon": "online-icons/8604eb0ca8a1.png",
+    "id": 18
+  },
+  {
+    "name": "937影视",
+    "desc": "看全网影视剧（需梯子）",
+    "url": "https://www.937tv.vip",
+    "icon": "online-icons/5d906df50fbf.png",
+    "id": 19
+  },
+  {
+    "name": "注视影视",
+    "desc": "国内海外影视剧资源（需梯子）",
+    "url": "https://gaze.red/",
+    "icon": "online-icons/5ac4f27763cb.png",
+    "id": 20
+  }
+]

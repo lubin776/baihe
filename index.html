@@ -1,0 +1,3488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=yes">
+<!-- TVBOX-EMBED:HEAD -->
+<script>
+/* App 内嵌版：尽早标记原生环境（web 版不命中任何一条分支） */
+(function () {
+  var n = (typeof window !== 'undefined' && window.TVBoxNative &&
+    typeof window.TVBoxNative.downloadUpdate === 'function') ? window.TVBoxNative : null;
+  window.__TVBOX_NATIVE__ = n;
+  if (!n) return;
+  var r = document.documentElement;
+  r.className = (r.className ? r.className + ' ' : '') + 'native-app';
+  try {
+    if (localStorage.getItem('site_mode') === null) localStorage.setItem('site_mode', 'full');
+  } catch (e) {}
+})();
+</script>
+<!-- /TVBOX-EMBED:HEAD -->
+<title id="pageTitle">海量接口搬运备份</title>
+<style>
+/* ===== 主题变量 ===== */
+:root {
+  --bg: #eef2f7;
+  --card: #ffffff;
+  --panel: #f8fafd;
+  --border: #d4dbe5;
+  --border-soft: #e4ebf3;
+  --text: #1a2b3d;
+  --text-strong: #0a1a2b;
+  --text2: #7a8fa3;
+  --accent: #4a9eff;
+  --accent-2: #2563eb;
+  --ok: #16a34a;
+  --warn: #ca8a04;
+  --bad: #dc2626;
+  --urlbg: #f4f8fc;
+  --urlborder: #e0e8f0;
+  --tagbg: #d8e8f8;
+  --tagtext: #3a5a7a;
+  --shadow: 0 2px 10px rgba(30, 60, 100, .06);
+  --radius: 14px;
+}
+
+body[data-theme="dark"] {
+  --bg: #0d1420;
+  --card: #141f31;
+  --panel: #101a2b;
+  --border: #223650;
+  --border-soft: #1c2c44;
+  --text: #dbe6f2;
+  --text-strong: #eef4fb;
+  --text2: #8fa6c4;
+  --accent: #4a9eff;
+  --accent-2: #3b82f6;
+  --ok: #4ade80;
+  --warn: #e8b34a;
+  --bad: #f87171;
+  --urlbg: #0f1929;
+  --urlborder: #1e2f47;
+  --tagbg: rgba(74, 158, 255, .16);
+  --tagtext: #7fb0e8;
+  --shadow: 0 4px 16px rgba(0, 0, 0, .35);
+}
+
+/* ===== 全局重置与基础 ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 20px 14px 10px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .3s, color .3s;
+}
+
+button:focus, button:focus-visible,
+.nav-tab:focus, .nav-tab:focus-visible,
+.copy-btn:focus, .copy-btn:focus-visible,
+input:focus, input:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ===== 布局容器 ===== */
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: clip;
+}
+
+/* ===== 主题切换按钮 ===== */
+#themeToggleBtn {
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  z-index: 999;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .45);
+  background: rgba(255, 255, 255, .15);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+/* ===== 模式切换按钮（右上角，与主题按钮同一水平线） ===== */
+#modeToggleBtn {
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  z-index: 999;
+  min-width: 56px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  background: rgba(255, 255, 255, .15);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: .58rem;
+  line-height: 1.3;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+/* ===== 头部 Hero ===== */
+.header-block {
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 24px 16px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2a4a 100%);
+  border: 1px solid #1e3a5a;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-block::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(74, 158, 255, .35), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+h1 .header-logo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .55);
+  object-fit: cover;
+  vertical-align: -.5rem;
+  margin-right: 8px;
+}
+
+.site-version {
+  display: inline-block;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: #a9c2dd;
+  background: rgba(74, 158, 255, .16);
+  border: 1px solid rgba(74, 158, 255, .38);
+  border-radius: 999px;
+  padding: 1px 8px;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+/* 副标题主行：文案与下方群号左对齐，版本号靠最右 */
+.subtitle-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.subtitle .qq-row { justify-content: flex-start; }
+
+body[data-theme="light"] .site-version {
+  color: #2c4a6e;
+  background: rgba(74, 158, 255, .12);
+  border-color: rgba(74, 158, 255, .35);
+}
+
+.header-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, .15);
+  margin: 12px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.subtitle {
+  font-size: .78rem;
+  color: #a9c2dd;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  text-align: left;
+}
+
+/* ===== 白天主题下的头部（默认深色 Hero 需切换为浅色） ===== */
+body[data-theme="light"] .header-block {
+  background: linear-gradient(135deg, #ffffff 0%, #e9f1fc 100%);
+  border-color: var(--border-soft);
+}
+
+body[data-theme="light"] .header-block::after {
+  background: radial-gradient(circle, rgba(74, 158, 255, .16), transparent 70%);
+}
+
+body[data-theme="light"] h1 { color: var(--text-strong); }
+
+body[data-theme="light"] h1 .header-logo {
+  border-color: rgba(74, 158, 255, .35);
+}
+
+body[data-theme="light"] .header-divider { background: var(--border); }
+
+body[data-theme="light"] .subtitle { color: var(--text2); }
+
+body[data-theme="light"] #themeToggleBtn,
+body[data-theme="light"] #modeToggleBtn {
+  border-color: rgba(30, 60, 100, .22);
+  background: rgba(30, 60, 100, .06);
+  color: var(--text-strong);
+}
+
+/* ===== 搜索框 ===== */
+.search-box {
+  width: 100%;
+  padding: 11px 18px;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: .92rem;
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.search-box:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, .18);
+}
+
+body.simple-mode .search-box { margin-bottom: 20px; }
+body:not(.simple-mode) .search-box { margin-bottom: 14px; }
+
+/* ===== 主卡片 ===== */
+.main-card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 20px 22px 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  width: 100%;
+  transition: background .3s, border-color .3s;
+}
+
+/* ===== 导航标签（吸顶毛玻璃） ===== */
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: sticky;
+  top: 8px;
+  z-index: 60;
+  background: var(--card);
+  padding: 8px 2px;
+}
+
+.nav-tabs::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* 内容不足一屏时整体居中，超出一屏时可从任意一端滑动 */
+.nav-tabs::before,
+.nav-tabs::after {
+  content: '';
+  flex: 0 0 auto;
+  margin: auto;
+}
+
+.nav-tab {
+  padding: 8px 20px;
+  border: 1px solid var(--border-soft);
+  border-radius: 40px;
+  background: var(--panel);
+  color: var(--text2);
+  font-size: .82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  box-shadow: var(--shadow);
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s, color .2s, border-color .2s, transform .05s;
+}
+
+.nav-tab.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(74, 158, 255, .35);
+}
+
+.nav-tab:active { transform: scale(.96); }
+
+/* ===== 面板 ===== */
+.tab-panel { display: none; width: 100%; }
+.tab-panel.active { display: block; animation: fadeUp .25s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ===== 列表项（卡片化） ===== */
+.api-list, .live-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.api-item, .live-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  transition: transform .15s, border-color .2s, background .3s;
+}
+
+@media (hover: hover) {
+  .api-item:hover, .live-item:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  }
+}
+
+.api-item.hidden, .live-item.hidden, .download-card.hidden, .dl-row.hidden { display: none !important; }
+
+.api-item-header, .live-item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.api-item-name, .live-item-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.api-item-meta, .live-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .72rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: var(--text2);
+}
+
+.badge-new, .live-badge-new { color: var(--ok); font-weight: 600; }
+.badge-old, .live-badge-old { color: var(--warn); font-weight: 600; }
+.badge-dead, .live-badge-dead { color: var(--bad); font-weight: 600; }
+
+/* ===== 健康状态 ===== */
+.health-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: -2px 0 10px;
+  font-size: .72rem;
+}
+
+.health-url {
+  color: var(--text2);
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* 状态药丸 */
+.hstatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .68rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 30px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+}
+
+.hstatus i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.hstatus.st-ok   { color: var(--ok);   background: color-mix(in srgb, var(--ok) 12%, transparent);   border-color: color-mix(in srgb, var(--ok) 28%, transparent); }
+.hstatus.st-ok i { background: var(--ok); }
+.hstatus.st-warn   { color: var(--warn);   background: color-mix(in srgb, var(--warn) 12%, transparent);   border-color: color-mix(in srgb, var(--warn) 28%, transparent); }
+.hstatus.st-warn i { background: var(--warn); }
+.hstatus.st-bad   { color: var(--bad);   background: color-mix(in srgb, var(--bad) 12%, transparent);   border-color: color-mix(in srgb, var(--bad) 28%, transparent); }
+.hstatus.st-bad i { background: var(--bad); }
+
+/* 健康度总结 + 进度条 */
+.health-summary {
+  background: var(--panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 10px 14px 12px;
+  margin-bottom: 14px;
+  font-size: .78rem;
+  color: var(--text2);
+  transition: background .3s, border-color .3s;
+}
+
+.hs-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  font-size: .74rem;
+}
+
+.hs-time { font-size: .68rem; }
+
+.hs-bar {
+  height: 7px;
+  border-radius: 6px;
+  background: var(--urlbg);
+  overflow: hidden;
+  display: flex;
+}
+
+.hs-bar span { display: block; height: 100%; }
+.hs-okseg   { background: linear-gradient(90deg, var(--ok), color-mix(in srgb, var(--ok) 70%, #fff)); }
+.hs-softseg { background: var(--warn); }
+.hs-badseg  { background: var(--bad); }
+
+.hs-legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: .68rem;
+  margin-top: 8px;
+}
+
+.hs-legend i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.health-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex-shrink: 0;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.health-summary .health-ok   { color: var(--ok);   font-weight: 600; }
+.health-summary .health-bad  { color: var(--bad);  font-weight: 600; }
+.health-summary .health-soft { color: var(--warn); font-weight: 600; }
+
+/* ===== URL 行 ===== */
+.api-item-urls, .live-item-urls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.url-line {
+  display: block;
+  padding: 8px 14px 9px;
+  background: var(--urlbg);
+  border: 1px solid var(--urlborder);
+  border-radius: 14px;
+  min-width: 0;
+  transition: background .3s, border-color .3s;
+}
+
+/* 第一行：标签 + 状态胶囊 + 操作按钮；链接单独占第二行 */
+.url-line-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.url-line-top .url-tag,
+.url-line-top .hstatus,
+.url-line-top .copy-btn,
+.url-line-top .decrypt-btn,
+.url-line-top .viewsrc-btn { flex-shrink: 0; }
+
+.url-line-top .hstatus { max-width: 45%; overflow: hidden; }
+
+.url-line.main-line {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--urlborder));
+}
+
+.url-tag, .live-url-tag {
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--tagtext);
+  background: var(--tagbg);
+  padding: 2px 14px;
+  border-radius: 50px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.url-text, .live-url-text {
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--accent);
+  word-break: break-all;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 线路行里的链接独占第二行，整行留给长链接 */
+.url-line .url-text {
+  display: block;
+  flex: none;
+  margin-top: 5px;
+  font-size: .74rem;
+  line-height: 1.35;
+}
+
+/* 线路行内的状态：只留一个小圆点，放在线路名前面（详情看 title） */
+.url-line .hstatus.dot {
+  padding: 0;
+  gap: 0;
+  border: none;
+  background: none;
+  width: 8px;
+  height: 8px;
+  justify-content: center;
+}
+
+.url-line .hstatus.dot i { width: 7px; height: 7px; }
+
+.hstatus.st-none i { background: var(--warn); opacity: .45; }
+
+/* 备份线路折叠 */
+.backup-toggle summary {
+  list-style: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: .7rem;
+  color: var(--text2);
+  padding: 6px;
+  border-radius: 30px;
+  border: 1px dashed var(--border);
+  user-select: none;
+  -webkit-user-select: none;
+  transition: color .2s, border-color .2s;
+}
+
+.backup-toggle summary::-webkit-details-marker { display: none; }
+.backup-toggle summary:active { color: var(--accent); }
+.backup-toggle[open] summary { margin-bottom: 8px; border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); color: var(--accent); }
+.backup-lines { display: flex; flex-direction: column; gap: 6px; }
+
+/* ===== 复制按钮 ===== */
+.copy-btn {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 0 14px;
+  font-size: .7rem;
+  font-weight: 500;
+  cursor: pointer;
+  height: 27px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .05s, filter .15s;
+  white-space: nowrap;
+  margin-left: auto;
+  position: relative;
+  z-index: 2;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(74, 158, 255, .3);
+}
+
+.copy-btn:active { filter: brightness(.88); transform: scale(.96); }
+.copy-btn.copied { background: #3b9b6c; box-shadow: none; }
+
+/* ===== 线路行操作按钮：解密（复制明文）/ 查看站源（简洁版、全能版都显示） ===== */
+.decrypt-btn,
+.viewsrc-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border-radius: 30px;
+  padding: 0 10px;
+  font-size: .68rem;
+  font-weight: 500;
+  height: 27px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .05s, filter .15s;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.decrypt-btn:active,
+.viewsrc-btn:active { filter: brightness(.9); transform: scale(.96); }
+.decrypt-btn.dec-busy,
+.viewsrc-btn.dec-busy { opacity: .55; pointer-events: none; }
+.decrypt-btn.dec-done,
+.viewsrc-btn.dec-done {
+  color: #3b9b6c;
+  border-color: color-mix(in srgb, #3b9b6c 40%, transparent);
+  background: color-mix(in srgb, #3b9b6c 12%, transparent);
+}
+.decrypt-btn.dec-failed,
+.viewsrc-btn.dec-failed {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 40%, transparent);
+  background: color-mix(in srgb, var(--bad) 12%, transparent);
+}
+
+/* ===== 解密结果弹层：播放源列表（name + key / api） ===== */
+.dec-sheet-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .22s, visibility .22s;
+}
+
+.dec-sheet-mask.show { opacity: 1; visibility: visible; }
+
+.dec-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: 18px 18px 0 0;
+  border-top: 1px solid var(--border);
+  transform: translateY(100%);
+  transition: transform .26s ease;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.dec-sheet-mask.show .dec-sheet { transform: translateY(0); }
+
+.dec-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.dec-sheet-title {
+  flex: 1;
+  min-width: 0;
+  font-size: .86rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dec-sheet-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: var(--urlbg);
+  color: var(--tagtext);
+  font-size: .8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.dec-sheet-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.dec-item {
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.dec-item-name {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  word-break: break-word;
+}
+
+.dec-item-sub {
+  margin-top: 3px;
+  font-size: .7rem;
+  color: var(--tagtext);
+  word-break: break-all;
+}
+
+.dec-empty {
+  padding: 28px 16px;
+  text-align: center;
+  font-size: .78rem;
+  color: var(--tagtext);
+}
+
+.dec-sheet-foot {
+  display: flex;
+  gap: 10px;
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.dec-sheet-btn {
+  flex: 1;
+  height: 38px;
+  border-radius: 30px;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: .78rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dec-sheet-btn.primary {
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+/* 标题栏内联复制按钮 */
+.copy-btn-qq {
+  margin-left: 0;
+  height: 26px;
+  padding: 0 16px;
+  font-size: .72rem;
+  vertical-align: middle;
+  box-shadow: 0 2px 8px rgba(74, 158, 255, .35);
+}
+
+.qq-line {
+  display: block;
+}
+
+.qq-line + .qq-line {
+  margin-top: 4px;
+}
+
+/* 两个群号并排一行 */
+.qq-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 18px;
+  margin-top: 4px;
+}
+
+.subtitle .qq-row .qq-line {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+
+/* 直播聚合块复制按钮差异化 */
+.live-top-aggregate .copy-btn {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, .92);
+  color: #1a4a7a;
+  margin-left: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-shadow: none;
+}
+
+.live-top-aggregate .copy-btn:active { transform: scale(.96); background: rgba(255, 255, 255, 1); }
+.live-top-aggregate .copy-btn.copied { background: #d1f5e0; color: #0a6a3a; }
+.live-top-aggregate .domain-line span { pointer-events: none; }
+
+/* ===== 加载/错误 ===== */
+.loading {
+  text-align: center;
+  color: var(--text2);
+  padding: 60px 0;
+  font-size: .88rem;
+}
+
+.error-msg {
+  text-align: center;
+  color: var(--bad);
+  padding: 16px 20px;
+  font-size: .8rem;
+  background: color-mix(in srgb, var(--bad) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bad) 25%, transparent);
+  border-radius: 8px;
+  margin: 12px 0;
+  word-break: break-all;
+}
+
+/* ===== 页脚 ===== */
+.page-footer {
+  text-align: center;
+  padding: 24px 0 10px;
+  font-size: .7rem;
+  color: var(--text2);
+  line-height: 1.8;
+  flex-shrink: 0;
+}
+
+/* ===== 简洁模式 ===== */
+body.simple-mode .nav-tabs { display: none !important; }
+
+body.simple-mode .orig-line .url-text { font-size: .68rem; }
+body.simple-mode .health-line { font-size: .66rem; }
+
+body.simple-mode #parse-panel,
+body.simple-mode #convert-panel,
+body.simple-mode #live-panel,
+body.simple-mode #epg-panel,
+body.simple-mode #download-panel,
+body.simple-mode #danmu-panel,
+body.simple-mode #about-panel { display: none !important; }
+
+body.simple-mode #api-panel { display: block !important; }
+
+/* ===== 直播面板 ===== */
+#live-panel { overflow-x: hidden; width: 100%; }
+
+.live-top-aggregate {
+  background: linear-gradient(135deg, #4a9eff 0%, #1e6fda 100%);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(74, 158, 255, .3);
+  overflow-x: hidden;
+}
+
+.live-top-aggregate h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+
+.live-top-aggregate .domain-line {
+  background: rgba(255, 255, 255, .15);
+  border: 1px solid rgba(255, 255, 255, .3);
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  min-width: 0;
+}
+
+.live-top-aggregate .domain-line span {
+  flex: 1;
+  font-size: .74rem;
+  font-weight: 500;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.live-url-line {
+  background: var(--urlbg);
+  border: 1px solid var(--urlborder);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  transition: background .3s, border-color .3s;
+}
+
+.live-url-line.main-line { border-color: color-mix(in srgb, var(--accent) 40%, var(--urlborder)); }
+
+.live-info-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .65rem;
+  color: var(--text2);
+  line-height: 1.4;
+  flex-wrap: wrap;
+  word-break: break-all;
+}
+
+.live-info-inline .sep { color: var(--border); }
+
+.live-url-body { display: flex; align-items: center; gap: 8px; min-width: 0; }
+
+/* ===== 下载面板 ===== */
+#download-panel, #downloads-content { overflow-x: hidden; width: 100%; }
+
+.download-card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px 14px 22px;
+  text-align: center;
+  border: 1px solid var(--border-soft);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 170px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  transition: transform .15s, border-color .2s, background .3s;
+}
+
+@media (hover: hover) {
+  .download-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
+}
+
+.download-card img {
+  width: 80%;
+  max-width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  object-fit: cover;
+  background: var(--urlbg);
+}
+
+/* ===== 下载：整行卡片 ===== */
+.dl-section { margin-bottom: 20px; }
+
+.dl-section-title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  padding: 0 4px;
+}
+
+.dl-section-desc {
+  font-size: .72rem;
+  color: var(--text2);
+  padding: 2px 4px 0;
+}
+
+.dl-list { margin-top: 12px; }
+
+.dl-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: inherit;
+  background: color-mix(in srgb, var(--accent) 14%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  transition: transform .15s ease, filter .2s ease;
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .dl-row:hover { transform: translateY(-2px); filter: brightness(.98); }
+}
+
+.dl-icon,
+.dl-icon-ph {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  box-shadow: 0 3px 9px rgba(15, 23, 42, .2);
+  background: #fff;
+  object-fit: cover;
+}
+
+.dl-icon-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.dl-main { flex: 1 1 auto; min-width: 0; }
+
+.dl-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-sub {
+  font-size: .78rem;
+  margin-top: 3px;
+  color: var(--text2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-id {
+  font-size: .67rem;
+  margin-top: 2px;
+  letter-spacing: .02em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: color-mix(in srgb, var(--text2) 72%, transparent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-btn {
+  flex: 0 0 auto;
+  padding: 9px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-size: .98rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  box-shadow: 0 2px 7px rgba(15, 23, 42, .16);
+}
+
+@media (max-width: 600px) {
+  .dl-row { gap: 11px; padding: 12px 13px; border-radius: 17px; }
+  .dl-icon, .dl-icon-ph { width: 48px; height: 48px; border-radius: 13px; }
+  .dl-name { font-size: 1rem; }
+  .dl-sub { font-size: .73rem; }
+  .dl-btn { padding: 8px 16px; font-size: .88rem; }
+}
+
+body[data-theme="dark"] #download-panel #downloads-content > .dl-section {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+body[data-theme="dark"] .dl-row {
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ===== 在线影视图标 ===== */
+.site-icon-wrap {
+  position: relative;
+  width: 80%;
+  max-width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: var(--urlbg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.site-icon-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--urlbg);
+}
+
+.site-ph { color: var(--accent); font-size: 1.7rem; font-weight: 700; line-height: 1; }
+
+/* ===== 在线影视：紧凑卡片 ===== */
+.online-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(102px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+#online-panel .download-card {
+  min-height: 0;
+  padding: 10px 8px 11px;
+  border-radius: 10px;
+}
+
+#online-panel .download-card .site-icon-wrap {
+  width: 44px;
+  border-radius: 9px;
+  margin-bottom: 7px;
+}
+
+#online-panel .download-card .site-ph { font-size: 1.05rem; }
+
+#online-panel .online-name {
+  font-size: .72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#online-panel .online-desc {
+  font-size: .58rem;
+  color: var(--text2);
+  margin-top: 3px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== 关于面板 ===== */
+#about-panel > div {
+  background: var(--panel) !important;
+  border-radius: 12px !important;
+  padding: 16px 18px !important;
+  margin-bottom: 14px !important;
+  border: 1px solid var(--border-soft) !important;
+  transition: background .3s, border-color .3s;
+}
+
+#about-panel h3 { font-size: .9rem !important; margin-bottom: 10px !important; color: var(--text-strong) !important; }
+#about-panel p, #about-panel li { font-size: .75rem !important; line-height: 1.7 !important; color: var(--text2) !important; }
+#about-panel code { background: var(--urlbg) !important; color: var(--accent) !important; }
+
+#about-panel > div > div {
+  background: var(--urlbg) !important;
+  border: 1px solid var(--urlborder) !important;
+  border-radius: 50px !important;
+  padding: 8px 16px !important;
+  margin-top: 8px !important;
+  transition: background .3s, border-color .3s;
+}
+
+#about-panel > div > div span { color: var(--accent) !important; }
+#about-panel strong { color: var(--text-strong) !important; }
+
+/* JS 动态生成的面板容器统一适配暗色 */
+body[data-theme="dark"] #danmu-content > div,
+body[data-theme="dark"] #yinyuan-content > div,
+body[data-theme="dark"] #shuyuan-content > div,
+body[data-theme="dark"] #comic-content > div,
+body[data-theme="dark"] #epg-content > div,
+body[data-theme="dark"] #online-content > div,
+body[data-theme="dark"] #downloads-content > div {
+  background: var(--panel) !important;
+  border-color: var(--border) !important;
+}
+
+body[data-theme="dark"] #danmu-content .danmu-item {
+  background: var(--urlbg) !important;
+  border-color: var(--urlborder) !important;
+}
+
+body[data-theme="dark"] #danmu-content .danmu-item span,
+body[data-theme="dark"] #danmu-content .danmu-item p { color: var(--text) !important; }
+body[data-theme="dark"] #danmu-content h3,
+body[data-theme="dark"] #yinyuan-content h3,
+body[data-theme="dark"] #shuyuan-content h3,
+body[data-theme="dark"] #comic-content h3,
+body[data-theme="dark"] #epg-content h3,
+body[data-theme="dark"] #online-content h3 { color: var(--text-strong) !important; }
+body[data-theme="dark"] #danmu-content p,
+body[data-theme="dark"] #yinyuan-content p,
+body[data-theme="dark"] #shuyuan-content p,
+body[data-theme="dark"] #comic-content p,
+body[data-theme="dark"] #epg-content p,
+body[data-theme="dark"] #online-content p { color: var(--text2) !important; }
+body[data-theme="dark"] #danmu-content h3 + p + div span,
+body[data-theme="dark"] #yinyuan-content .api-item-meta span,
+body[data-theme="dark"] #shuyuan-content .api-item-meta span,
+body[data-theme="dark"] #comic-content .api-item-meta span { color: var(--ok) !important; }
+
+/* 漫画源导入地址框（跟随主题变量） */
+#comic-content .comic-import-box {
+  background: var(--urlbg);
+  border: 1px solid var(--urlborder);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+/* ===== EPG 接口列表 ===== */
+.epg-list { display: flex; flex-direction: column; width: 100%; }
+
+.epg-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.epg-item:last-child { border-bottom: none; }
+.epg-item.hidden { display: none !important; }
+
+.epg-item-main { flex: 1; min-width: 0; }
+
+.epg-item-name {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.epg-item-url {
+  font-size: .7rem;
+  color: var(--accent-2);
+  word-break: break-all;
+  margin-top: 2px;
+}
+
+.epg-fmt {
+  font-size: .62rem;
+  font-weight: 500;
+  color: var(--tagtext);
+  background: var(--tagbg);
+  border-radius: 20px;
+  padding: 1px 8px;
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+
+/* ===== 合作共创 ===== */
+.contributor-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.contributor-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: background .3s, border-color .3s;
+}
+
+.contributor-card.hidden { display: none !important; }
+
+.contributor-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: .85rem;
+}
+
+.contributor-info { flex: 1; min-width: 0; }
+
+.contributor-name {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contributor-role {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: .6rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--tagbg);
+  padding: 2px 10px;
+  border-radius: 50px;
+}
+
+.contributor-desc { margin-top: 6px; font-size: .68rem; color: var(--text2); line-height: 1.4; }
+.contributor-social { margin-top: 6px; font-size: .68rem; color: var(--accent); }
+.contributor-qq { margin: 9px 0 0; height: 26px; padding: 0 14px; font-size: .68rem; }
+
+/* ===== 移动端适配 ===== */
+@media (max-width: 600px) {
+  body { padding: 14px 8px 6px; }
+
+  #themeToggleBtn { top: 10px; left: 8px; width: 32px; height: 32px; font-size: .9rem; }
+  #modeToggleBtn { top: 10px; right: 8px; min-width: 48px; height: 32px; font-size: .52rem; padding: 0 10px; }
+
+  .header-block { padding: 18px 12px 16px; margin-bottom: 12px; }
+  .main-card { padding: 14px 12px 12px; }
+  h1 { font-size: 1.15rem; }
+  h1 .header-logo { width: 1.7rem; height: 1.7rem; vertical-align: -.4rem; }
+
+  .nav-tab { padding: 6px 16px; font-size: .75rem; }
+  .api-item, .live-item { padding: 12px 12px; margin-bottom: 8px; }
+  .api-item-name, .live-item-name { font-size: .92rem; }
+
+  .url-line { padding: 7px 10px; gap: 6px; }
+  .url-tag, .live-url-tag { font-size: .62rem; padding: 2px 10px; }
+  .url-text, .live-url-text { font-size: .74rem; }
+  .copy-btn { font-size: .62rem; padding: 0 10px; height: 25px; }
+
+  .live-top-aggregate { padding: 14px 16px; }
+  .live-url-line { padding: 8px 10px; }
+  .live-url-body .live-url-tag { font-size: .62rem; padding: 2px 10px; }
+  .live-url-body .live-url-text { font-size: .74rem; }
+  .live-info-inline { font-size: .6rem; }
+
+  .hs-top { font-size: .7rem; }
+}
+
+/* ===== 解析工具面板 ===== */
+#parse-panel { overflow-x: hidden; width: 100%; }
+
+.parse-box {
+  background: var(--panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: background .3s, border-color .3s;
+}
+
+.parse-box h3 { font-size: .92rem; font-weight: 600; color: var(--text-strong); margin-bottom: 6px; }
+.parse-box .hint { font-size: .74rem; color: var(--text2); line-height: 1.7; margin-bottom: 10px; }
+.parse-label { font-size: .78rem; font-weight: 600; color: var(--text-strong); margin: 12px 0 8px; }
+.parse-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+
+.parse-input, .parse-textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: .8rem;
+  font-family: inherit;
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.parse-input:focus, .parse-textarea:focus { border-color: var(--accent); }
+
+.parse-textarea {
+  resize: vertical;
+  line-height: 1.5;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: .72rem;
+}
+
+.parse-btn {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 30px;
+  padding: 9px 20px;
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(74, 158, 255, .3);
+}
+
+.parse-btn.ghost { background: var(--card); color: var(--accent); border: 1.5px solid var(--accent); box-shadow: none; }
+.parse-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.parse-btn:active:not(:disabled) { transform: scale(.97); }
+
+.parse-btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+.parse-status {
+  font-size: .74rem;
+  color: var(--text2);
+  margin-top: 8px;
+  min-height: 1em;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+.parse-urls { display: flex; flex-direction: column; gap: 6px; }
+
+/* 不支持 overflow:clip 的浏览器回退（牺牲吸顶，保证布局不横向滚动） */
+@supports not (overflow-x: clip) {
+  body, .container, .main-card { overflow-x: hidden; }
+}
+/* ===== App 内嵌版专属样式（前缀 html.native-app，web 版完全不受影响） ===== */
+html.native-app {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
+
+/* 沉浸式状态栏：内容顶到状态栏下方，用安全区把正文压回来 */
+html.native-app body {
+  padding-top: calc(var(--sat) + 16px);
+  padding-bottom: calc(74px + var(--sab));
+}
+
+/* 顶部导航 -> 底部图标标签栏 */
+html.native-app .nav-tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  z-index: 200;
+  margin: 0 auto;
+  max-width: 820px;
+  padding: 6px 8px calc(6px + var(--sab));
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 14px rgba(0, 0, 0, .10);
+  gap: 4px;
+}
+html.native-app .nav-tabs::before,
+html.native-app .nav-tabs::after { display: none; }
+html.native-app .nav-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  min-width: 58px;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  box-shadow: none;
+  font-size: .64rem;
+  line-height: 1.1;
+}
+html.native-app .nav-tab::before {
+  content: '📄';
+  font-size: 1.08rem;
+  line-height: 1.15;
+}
+html.native-app .nav-tab[data-tab="api"]::before { content: '🎬'; }
+html.native-app .nav-tab[data-tab="parse"]::before { content: '🔓'; }
+html.native-app .nav-tab[data-tab="convert"]::before { content: '🔄'; }
+html.native-app .nav-tab[data-tab="online"]::before { content: '📡'; }
+html.native-app .nav-tab[data-tab="live"]::before { content: '📺'; }
+html.native-app .nav-tab[data-tab="epg"]::before { content: '📅'; }
+html.native-app .nav-tab[data-tab="download"]::before { content: '⬇️'; }
+html.native-app .nav-tab[data-tab="danmu"]::before { content: '💬'; }
+html.native-app .nav-tab[data-tab="yinyuan"]::before { content: '🎵'; }
+html.native-app .nav-tab[data-tab="shuyuan"]::before { content: '📚'; }
+html.native-app .nav-tab[data-tab="comic"]::before { content: '🖼️'; }
+html.native-app .nav-tab[data-tab="about"]::before { content: 'ℹ️'; }
+html.native-app .nav-tab[data-tab="fm365"]::before { content: '📻'; }
+html.native-app .nav-tab.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(74, 158, 255, .3);
+}
+
+/* FM 电台：站内内嵌 */
+html.native-app .fm365-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 220px);
+  min-height: 320px;
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f0f7ff;
+}
+@media (max-height: 520px) {
+  html.native-app .fm365-wrap { height: calc(100vh - 170px); min-height: 220px; }
+}
+html.native-app .fm365-wrap iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+html.native-app .fm365-tip {
+  margin-top: 10px;
+  font-size: .68rem;
+  text-align: center;
+  color: var(--text2);
+}
+
+/* ===== 强制更新遮罩 ===== */
+#forceUpdateMask {
+  position: fixed; inset: 0; z-index: 100000;
+  background: rgba(8, 14, 24, .82);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.fu-card {
+  width: 100%; max-width: 340px;
+  background: var(--card, #1b2230);
+  border: 1px solid var(--border-soft, #2c3747);
+  border-radius: 16px; padding: 20px 18px 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .5);
+  text-align: center;
+}
+.fu-title { font-size: 1.02rem; font-weight: 700; color: var(--text-strong, #eaf1fa); margin-bottom: 6px; }
+.fu-ver { font-size: .72rem; color: var(--accent, #4a9eff); margin-bottom: 12px; }
+.fu-log {
+  font-size: .74rem; line-height: 1.75; color: var(--text2, #a8b6c8);
+  text-align: left; white-space: pre-wrap; word-break: break-word;
+  max-height: 34vh; overflow: auto;
+  background: color-mix(in srgb, var(--accent, #4a9eff) 8%, transparent);
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 14px;
+}
+.fu-btn {
+  display: block; width: 100%; border: 0; border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent, #4a9eff), var(--accent-2, #6f7bff));
+  color: #fff; font-size: .84rem; font-weight: 600; font-family: inherit;
+  padding: 12px 0; cursor: pointer; margin-bottom: 8px; touch-action: manipulation;
+}
+.fu-btn.ghost { background: transparent; border: 1px solid var(--border, #33405480); color: var(--text2, #a8b6c8); font-weight: 500; }
+.fu-tip { font-size: .66rem; line-height: 1.6; color: var(--text2, #8b9bb0); margin-top: 4px; }
+.fu-prog { display: none; margin: 2px 0 12px; }
+.fu-prog.on { display: block; }
+.fu-prog-txt { font-size: .68rem; color: var(--text2, #a8b6c8); margin-bottom: 6px; text-align: left; }
+.fu-prog-bar {
+  height: 6px; border-radius: 999px; overflow: hidden;
+  background: color-mix(in srgb, var(--accent, #4a9eff) 18%, transparent);
+}
+.fu-prog-fill {
+  height: 100%; width: 0%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent, #4a9eff), var(--accent-2, #6f7bff));
+  transition: width .25s linear;
+}
+.fu-prog.indet .fu-prog-fill { width: 34%; animation: fuSlide 1.1s ease-in-out infinite; }
+@keyframes fuSlide {
+  0%   { transform: translateX(-105%); }
+  100% { transform: translateX(305%); }
+}
+</style>
+</head>
+<body class="simple-mode">
+
+<div class="container">
+
+  <button id="themeToggleBtn" title="切换主题">🌙</button>
+
+  <button id="modeToggleBtn">切换<br>全能版</button>
+
+  <div class="header-block">
+    <h1>
+      <img class="header-logo" id="siteLogo" src="x/jueson.jpg" alt="Logo">
+      <span id="siteTitle">海量接口搬运备份</span>
+    </h1>
+    <div class="header-divider"></div>
+    <p class="subtitle"><span class="subtitle-main"><span class="qq-line" id="siteSubtitle">备用数据源，防屏不迷路</span><span class="site-version" id="siteVersion">v3.0.5</span></span><span class="qq-row"><span class="qq-line">误道者群聊：<button class="copy-btn copy-btn-qq" type="button" data-url="1067685939" title="点击复制 QQ 群号">点我复制群号</button></span><span class="qq-line">沫离群聊：<button class="copy-btn copy-btn-qq" type="button" data-url="367018090" title="点击复制 QQ 群号">点我复制群号</button></span></span></p>
+  </div>
+
+  <input class="search-box" id="search" type="text" placeholder="🔍 搜索..." oninput="globalSearch()">
+
+  <div class="main-card">
+
+    <div class="nav-tabs" id="navTabs"></div>
+
+    <!-- 点播面板 -->
+    <div class="tab-panel active" id="api-panel">
+      <div class="api-list" id="listContainer">
+        <div class="loading" id="apiLoading">⏳ 正在加载接口列表...</div>
+      </div>
+    </div>
+
+    <!-- 解密工具面板 -->
+    <div class="tab-panel" id="parse-panel">
+      <div class="parse-box">
+        <h3>🔓 沫离tvbox接口解密工具</h3>
+        <p class="hint">粘贴要解密的接口地址，点击「解密」获取明文配置。</p>
+        <div class="parse-row">
+          <input class="parse-input" id="decryptUrl" placeholder="输入接口地址，如 https://.../tv">
+          <button class="parse-btn" id="decryptBtn">解密</button>
+        </div>
+        <textarea class="parse-textarea" id="decryptResult" rows="16" readonly placeholder="解密结果将显示在这里"></textarea>
+        <div class="parse-btn-row">
+          <button class="parse-btn ghost" id="decryptCopyBtn" disabled>复制解密结果</button>
+        </div>
+        <div class="parse-status" id="decryptStatus"></div>
+      </div>
+    </div>
+
+    <!-- 直播源格式转换面板 -->
+    <div class="tab-panel" id="convert-panel">
+      <div class="parse-box">
+        <h3>🔄 直播源格式转换</h3>
+        <p class="hint">txt ↔ m3u 互转，纯前端完成，不会上传你的源。支持直接粘贴，或上传 .txt / .m3u 文件。</p>
+        <div class="parse-row">
+          <input type="file" id="convertFile" accept=".txt,.m3u" class="parse-input">
+        </div>
+        <div class="parse-row">
+          <textarea class="parse-textarea" id="convertSource" rows="10" placeholder="原始直播源内容（支持 rtsp/rtp 等组播链接）"></textarea>
+        </div>
+        <div class="parse-row">
+          <textarea class="parse-textarea" id="convertResult" rows="10" readonly placeholder="转换结果"></textarea>
+        </div>
+        <div class="parse-btn-row">
+          <button class="parse-btn" id="txtToM3uBtn" disabled>txt 转 m3u</button>
+          <button class="parse-btn ghost" id="m3uToTxtBtn" disabled>m3u 转 txt</button>
+          <button class="parse-btn ghost" id="convertCopyBtn" disabled>复制结果</button>
+          <button class="parse-btn ghost" id="convertDownloadBtn" disabled>下载文件</button>
+        </div>
+        <div class="parse-status" id="convertStatus"></div>
+      </div>
+    </div>
+
+    <!-- 在线影视面板 -->
+    <div class="tab-panel" id="online-panel">
+      <div id="online-content">
+        <div class="loading">⏳ 正在加载在线影视...</div>
+      </div>
+    </div>
+
+    <!-- 直播面板 -->
+    <div class="tab-panel" id="live-panel">
+      <div class="live-top-aggregate">
+        <h3>海量直播聚合多线路专用接口</h3>
+        <div class="domain-line">
+          <span>https://tvbox.moliys.icu/tvbox/海量直播线路.json</span>
+          <button class="copy-btn" data-url="https://tvbox.moliys.icu/tvbox/海量直播线路.json">复制</button>
+        </div>
+      </div>
+      <div class="live-list" id="liveListContainer">
+        <div class="loading" id="liveLoading">⏳ 正在加载直播列表...</div>
+      </div>
+    </div>
+
+    <!-- EPG 接口面板 -->
+    <div class="tab-panel" id="epg-panel">
+      <div id="epg-content">
+        <div class="loading">⏳ 正在加载 EPG 接口...</div>
+      </div>
+    </div>
+
+    <!-- 下载面板 -->
+    <div class="tab-panel" id="download-panel">
+      <div id="downloads-content">
+        <div class="loading">⏳ 正在加载下载资源...</div>
+      </div>
+    </div>
+
+    <!-- 弹幕面板 -->
+    <div class="tab-panel" id="danmu-panel">
+      <div id="danmu-content">
+        <div class="loading">⏳ 正在加载弹幕接口...</div>
+      </div>
+    </div>
+
+    <!-- 音源面板 -->
+    <div class="tab-panel" id="yinyuan-panel">
+      <div id="yinyuan-content">
+        <div class="loading">⏳ 正在加载音源列表...</div>
+      </div>
+    </div>
+
+    <!-- 书源面板 -->
+    <div class="tab-panel" id="shuyuan-panel">
+      <div id="shuyuan-content">
+        <div class="loading">⏳ 正在加载书源...</div>
+      </div>
+    </div>
+
+    <!-- 漫画源面板 -->
+    <div class="tab-panel" id="comic-panel">
+      <div id="comic-content">
+        <div class="loading">⏳ 正在加载漫画源...</div>
+      </div>
+    </div>
+
+    <!-- 关于面板 -->
+    <div class="tab-panel" id="about-panel">
+      <div style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
+        <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px">🌐 备份线路域名</h3>
+        <p style="margin-bottom:6px;font-size:.76rem;color:#5a6f88">四个域名互为备份，任一个可用：</p>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:1;font-size:.75rem;color:#2563eb">https://tvbox.moliys.icu</span>
+          <button class="copy-btn" data-url="https://tvbox.moliys.icu">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:1;font-size:.75rem;color:#2563eb">https://0.12yue.de5.net</span>
+          <button class="copy-btn" data-url="https://0.12yue.de5.net">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:1;font-size:.75rem;color:#2563eb">https://0.cdz.qzz.io</span>
+          <button class="copy-btn" data-url="https://0.cdz.qzz.io">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:1;font-size:.75rem;color:#2563eb">https://0.wdzb.eu.cc</span>
+          <button class="copy-btn" data-url="https://0.wdzb.eu.cc">复制</button>
+        </div>
+      </div>
+      <!-- 合作共创 -->
+      <div id="contributors-card" style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
+        <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">🤝 合作共创</h3>
+        <p style="font-size:.76rem;color:#5a6f88;margin-bottom:4px">感谢以下伙伴对本站的内容贡献与支持（<strong style="color:#ca8a04">排名不分先后</strong>）：</p>
+        <div class="contributor-grid" id="contributors-list">
+          <div class="loading">⏳ 正在加载贡献者...</div>
+        </div>
+        <p style="font-size:.68rem;color:#8fa3b8;margin-top:10px;line-height:1.5;font-style:italic">* 还有部分贡献者因未留下署名信息而未在此列出，同样感谢你们的默默付出。如有遗漏请联系站长补充。</p>
+      </div>
+                  <div style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
+        <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px">💬 弹幕使用教程</h3>
+        <p style="font-size:.76rem;color:#5a6f88;line-height:1.7">两种壳子填的东西不一样，按自己壳子的类型选对应的一段。</p>
+
+        <p style="font-size:.78rem;color:#0b1e33;font-weight:600;margin-top:12px">① new 壳子：只填源本身</p>
+        <p style="font-size:.74rem;color:#5a6f88;line-height:1.7;margin-top:2px">new 是单独一类壳子，它的弹幕接口只需要填弹幕源地址本身，填好后播放时会自动按片名+集数拉取弹幕。</p>
+        <p style="font-size:.74rem;color:#5a6f88;margin-top:6px">弹幕接口：<code style="font-size:.72rem;color:#2563eb;background:#eef3fa;border-radius:4px;padding:1px 5px">{弹幕源地址}</code></p>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">ecs源</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">http://ecs.dysobo.cn:9321/87654321</span>
+          <button class="copy-btn" data-url="http://ecs.dysobo.cn:9321/87654321">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">量大</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">http://38.207.186.41/87654321</span>
+          <button class="copy-btn" data-url="http://38.207.186.41/87654321">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">sym源</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">https://danmu1.sym9233.dpdns.org/87654321</span>
+          <button class="copy-btn" data-url="https://danmu1.sym9233.dpdns.org/87654321">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">777775源</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">https://danmu.7777735.xyz/87654321</span>
+          <button class="copy-btn" data-url="https://danmu.7777735.xyz/87654321">复制</button>
+        </div>
+
+        <p style="font-size:.78rem;color:#0b1e33;font-weight:600;margin-top:14px">② 需要搜索接口的壳子：填下面的搜索接口</p>
+        <p style="font-size:.74rem;color:#5a6f88;line-height:1.7;margin-top:2px">如果你的壳子弹幕里需要填搜索接口，就填下面的完整地址；播放器会按片名和集数去拉弹幕。</p>
+        <p style="font-size:.74rem;color:#5a6f88;margin-top:6px">搜索接口：<code style="font-size:.72rem;color:#2563eb;background:#eef3fa;border-radius:4px;padding:1px 5px">{弹幕源地址}/api/v2/fongmi/danmaku?name={name}&amp;episode={episode}</code></p>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">ecs源</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">http://ecs.dysobo.cn:9321/87654321/api/v2/fongmi/danmaku?name={name}&amp;episode={episode}</span>
+          <button class="copy-btn" data-url="http://ecs.dysobo.cn:9321/87654321/api/v2/fongmi/danmaku?name={name}&episode={episode}">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">量大</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">http://38.207.186.41/87654321/api/v2/fongmi/danmaku?name={name}&amp;episode={episode}</span>
+          <button class="copy-btn" data-url="http://38.207.186.41/87654321/api/v2/fongmi/danmaku?name={name}&episode={episode}">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">sym源</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">https://danmu1.sym9233.dpdns.org/87654321/api/v2/fongmi/danmaku?name={name}&amp;episode={episode}</span>
+          <button class="copy-btn" data-url="https://danmu1.sym9233.dpdns.org/87654321/api/v2/fongmi/danmaku?name={name}&episode={episode}">复制</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:6px">
+          <span style="flex:0 0 auto;font-size:.72rem;font-weight:600;color:#0b1e33">777775源</span>
+          <span style="flex:1;font-size:.72rem;color:#2563eb;word-break:break-all">https://danmu.7777735.xyz/87654321/api/v2/fongmi/danmaku?name={name}&amp;episode={episode}</span>
+          <button class="copy-btn" data-url="https://danmu.7777735.xyz/87654321/api/v2/fongmi/danmaku?name={name}&episode={episode}">复制</button>
+        </div>
+
+        <p style="margin-top:12px;font-size:.74rem;color:#5a6f88;line-height:1.8">
+          <strong style="color:#0b1e33">使用步骤：</strong><br>
+          1. 先确认壳子类型：new 壳子只填源地址，需要搜索接口的壳子填完整地址<br>
+          2. 播放器 → 设置 → 弹幕，把对应地址粘贴进去并保存<br>
+          3. 播放时自动匹配弹幕；搜不到就换一个源
+        </p>
+        <p style="margin-top:8px;font-size:.72rem;color:#8b9eb0;line-height:1.7">提示：<code>{name}</code> 与 <code>{episode}</code> 是占位符，原样保留不要改成具体片名；更多弹幕源见上方「弹幕」标签页。</p>
+      </div>
+<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;margin-bottom:12px;border:1px solid #eef2f7">
+        <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:8px">📢 声明与联系</h3>
+        <ul style="padding-left:16px">
+          <li style="font-size:.76rem;color:#5a6f88;line-height:1.6">本站接口资源由【误道者】整理。所有资源均来自互联网，版权归原作者所有。仅供测试学习使用，请勿用于违法及商业用途，请勿付费购买。如涉及侵权，请联系删除。</li>
+        </ul>
+        <p style="margin-top:10px;font-size:.76rem;color:#5a6f88">QQ 交流群：<strong style="color:#4a9eff">367018090</strong></p>
+        <p style="margin-top:10px;font-size:.76rem;color:#5a6f88">Telegram群组：<strong style="color:#4a9eff">https://t.me/+nrWtFerPAfcwOTg9</strong></p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="page-footer">
+    <p>本站接口资源由【误道者】整理。所有资源均来自互联网，版权归原作者所有。仅供测试学习使用，请勿用于违法及商业用途，请勿付费购买。如涉及侵权，请联系删除。 QQ 群：367018090。</p>
+  </footer>
+
+</div>
+
+<script>
+/* ===== 基础配置 ===== */
+const MODE_KEY = 'site_mode';
+const THEME_KEY = 'site_theme';
+/* 站点版本号：每次修复/变更后末位 +1，例如 3.0.0 -> 3.0.1 */
+const SITE_VERSION = '3.0.26';
+const versionEl = document.getElementById('siteVersion');
+if (versionEl) versionEl.textContent = 'v' + SITE_VERSION;
+const btn = document.getElementById('modeToggleBtn');
+const themeBtn = document.getElementById('themeToggleBtn');
+let currentTheme = localStorage.getItem(THEME_KEY) || 'dark';
+function applyTheme(t) {
+  currentTheme = t;
+  document.body.setAttribute('data-theme', t);
+  localStorage.setItem(THEME_KEY, t);
+  if (themeBtn) themeBtn.textContent = t === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19';
+}
+applyTheme(currentTheme);
+if (themeBtn) themeBtn.addEventListener('click', function () {
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+const searchBox = document.getElementById('search');
+const mainCard = document.querySelector('.main-card');
+const navTabs = document.getElementById('navTabs');
+
+const API_DOMAINS = [
+  { tag: "本机", base: "https://tvbox.moliys.icu/tvbox/" },
+  { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/" },
+  { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/" },
+  { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/" }
+];
+
+const LIVE_DOMAINS = [
+  { tag: "本机", base: "https://tvbox.moliys.icu/tvbox/live/" },
+  { tag: "备份一线", base: "https://0.12yue.de5.net/tvbox/live/" },
+  { tag: "备份二线", base: "https://0.cdz.qzz.io/tvbox/live/" },
+  { tag: "备份三线", base: "https://0.wdzb.eu.cc/tvbox/live/" }
+];
+
+const API_WEIGHTS = {
+  "轮替占位.json": 1,
+  "幸福年年.json": 2,
+  "饭太硬.json": 4,
+  "肥猫.json": 5,
+  "摸鱼.json": 6,
+  "王二小.json": 7,
+  "集多.json": 8,
+  "潇洒.json": 9,
+  "小米.json": 10,
+  "嗷呜.json": 11,
+  "南风.json": 12,
+  "小虎斑.json": 13
+};
+
+// 模糊匹配关键词 —— 只要接口名里包含这些词之一就算命中
+const ROTATE_KEYWORDS = ["模糊搜索","模糊搜索"];
+
+/* ===== 状态变量 ===== */
+let currentMode = localStorage.getItem(MODE_KEY) || 'simple';
+let currentTabId = 'api';
+let topSeed = Date.now();
+let DOWNLOAD_SOURCES = [];
+let rawListText = null;
+let rawLiveText = null;
+
+/* ===== 初始化 ===== */
+document.body.className = currentMode + '-mode';
+updateBtnText();
+positionSearchBox();
+
+/* ===== 全局复制事件委托 ===== */
+document.addEventListener('click', function (e) {
+  const copyBtn = e.target.closest('.copy-btn');
+  if (!copyBtn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const url = copyBtn.getAttribute('data-url');
+  if (!url) return;
+
+  const done = () => {
+    const originalText = copyBtn.textContent;
+    copyBtn.textContent = '✅ 已复制';
+    copyBtn.classList.add('copied');
+    setTimeout(() => {
+      copyBtn.textContent = originalText;
+      copyBtn.classList.remove('copied');
+    }, 1500);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(done).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const input = document.createElement('input');
+    input.value = url;
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.appendChild(input);
+    input.focus();
+    input.select();
+    try { document.execCommand('copy'); } catch (_) {}
+    document.body.removeChild(input);
+    done();
+  }
+});
+
+/* ===== 全局解密事件委托（简洁模式：解密并复制明文） ===== */
+function decryptCopyText(text) {
+  const fallback = () => new Promise(resolve => {
+    const input = document.createElement('input');
+    input.value = text;
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.appendChild(input);
+    input.focus();
+    input.select();
+    try { document.execCommand('copy'); } catch (_) {}
+    document.body.removeChild(input);
+    resolve();
+  });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).catch(fallback);
+  }
+  return fallback();
+}
+
+/* 播放源列表弹层：只取 name + key（没有 key 时用 api） */
+function decSheetEl() {
+  let m = document.getElementById('decSheetMask');
+  if (m) return m;
+  m = document.createElement('div');
+  m.id = 'decSheetMask';
+  m.className = 'dec-sheet-mask';
+  m.innerHTML = '<div class="dec-sheet">'
+    + '<div class="dec-sheet-head"><div class="dec-sheet-title" id="decSheetTitle"></div>'
+    + '<button class="dec-sheet-close" id="decSheetClose" aria-label="关闭">\u2715</button></div>'
+    + '<div class="dec-sheet-body" id="decSheetBody"></div>'
+    + '<div class="dec-sheet-foot">'
+    + '<button class="dec-sheet-btn" id="decSheetCopy">复制原文</button>'
+    + '<button class="dec-sheet-btn primary" id="decSheetCloseBtn">关闭</button>'
+    + '</div></div>';
+  document.body.appendChild(m);
+  const close = () => m.classList.remove('show');
+  m.addEventListener('click', e => { if (e.target === m) close(); });
+  m.querySelector('#decSheetClose').addEventListener('click', close);
+  m.querySelector('#decSheetCloseBtn').addEventListener('click', close);
+  return m;
+}
+
+function openDecSheet(name, plain, sites) {
+  const m = decSheetEl();
+  const list = sites || [];
+  document.getElementById('decSheetTitle').textContent =
+    (name ? name + ' - ' : '') + '播放源 (' + list.length + ')';
+  document.getElementById('decSheetBody').innerHTML = list.length
+    ? list.map(s => {
+      const sub = (s && (s.key || s.api)) || '';
+      return '<div class="dec-item"><div class="dec-item-name">'
+        + escHtml(String((s && s.name) || '(未命名)')) + '</div>'
+        + '<div class="dec-item-sub">' + escHtml(String(sub)) + '</div></div>';
+    }).join('')
+    : '<div class="dec-empty">未识别到播放源（sites），可点“复制原文”查看完整配置</div>';
+  const copyBtn = document.getElementById('decSheetCopy');
+  copyBtn.textContent = '复制原文';
+  copyBtn.onclick = () => {
+    decryptCopyText(plain).then(() => {
+      copyBtn.textContent = '\u2705 已复制';
+      setTimeout(() => { copyBtn.textContent = '复制原文'; }, 1500);
+    });
+  };
+  m.classList.add('show');
+}
+
+/* 解密结果缓存：同一个接口点「解密」「查看站源」只请求一次，进行中的请求也合并 */
+const DEC_CACHE = new Map();
+
+function decFetch(url) {
+  const hit = DEC_CACHE.get(url);
+  if (hit) return hit;
+  const p = fetch(PARSE_DECRYPT_API + encodeURIComponent(url), { cache: 'no-store' })
+    .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
+    .then(data => {
+      const m = data.match(/{[\s\S]*}/);
+      if (!m && /^\s*Error:/i.test(data)) throw new Error('解密接口未取到内容');
+      const pure = (m ? m[0] : data).trim();
+      if (!pure) throw new Error('解密结果为空');
+      let sites = null;
+      try {
+        const o = JSON.parse(pure);
+        if (o && Array.isArray(o.sites)) sites = o.sites;
+      } catch (_) {}
+      return { plain: pure, sites };
+    })
+    .catch(err => {
+      DEC_CACHE.delete(url);
+      throw err;
+    });
+  DEC_CACHE.set(url, p);
+  if (DEC_CACHE.size > 60) DEC_CACHE.delete(DEC_CACHE.keys().next().value);
+  return p;
+}
+
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.decrypt-btn, .viewsrc-btn');
+  if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const url = btn.getAttribute('data-decrypt');
+  if (!url || btn.classList.contains('dec-busy')) return;
+  const isView = btn.classList.contains('viewsrc-btn');
+
+  const originalText = btn.textContent;
+  btn.classList.add('dec-busy');
+  btn.classList.remove('dec-done', 'dec-failed');
+  btn.textContent = isView ? '获取中...' : '解密中...';
+
+  const reset = () => setTimeout(() => {
+    btn.textContent = originalText;
+    btn.classList.remove('dec-done', 'dec-failed');
+  }, 2000);
+
+  decFetch(url)
+    .then(r => {
+      if (isView) {
+        openDecSheet(btn.getAttribute('data-name') || '', r.plain, r.sites);
+        btn.classList.remove('dec-busy');
+        btn.textContent = originalText;
+        return null;
+      }
+      return decryptCopyText(r.plain).then(() => {
+        btn.classList.remove('dec-busy');
+        btn.classList.add('dec-done');
+        btn.textContent = '✅ 已复制';
+        reset();
+      });
+    })
+    .catch(() => {
+      btn.classList.remove('dec-busy');
+      btn.classList.add('dec-failed');
+      btn.textContent = isView ? '获取失败' : '解密失败';
+      reset();
+    });
+});
+
+/* ===== 工具函数 ===== */
+function getTopItem(rotateItems) {
+  if (!rotateItems || !rotateItems.length) return null;
+  if (rotateItems.length === 1) return rotateItems[0];
+  const idx = Math.abs(Math.floor(Math.sin(topSeed) * 10000)) % rotateItems.length;
+  return rotateItems[idx];
+}
+
+function putDomains(arr, list) {
+  if (!Array.isArray(list) || !list.length) return;
+  const clean = list.filter(d => d && d.base).map(d => ({ tag: String(d.tag || ''), base: String(d.base) }));
+  if (!clean.length) return;
+  arr.length = 0;
+  clean.forEach(d => arr.push(d));
+}
+
+function applyDomains(cfg) {
+  if (!cfg) return;
+  putDomains(API_DOMAINS, cfg.api && cfg.api.domains);
+  putDomains(LIVE_DOMAINS, cfg.live && cfg.live.domains);
+}
+
+async function loadDownloadConfig() {
+  try {
+    const res = await fetch('config.json?t=' + Date.now() + '&r=' + Math.random(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const cfg = await res.json();
+    SITE_CFG = cfg || {};
+    DOWNLOAD_SOURCES = Array.isArray(cfg.downloadSources) ? cfg.downloadSources : [];
+    applyDomains(SITE_CFG);
+    applySiteInfo();
+    renderContributors(cfg.about && cfg.about.contributors);
+  } catch (e) {
+    DOWNLOAD_SOURCES = [];
+    renderContributors([]);
+  }
+}
+
+let SITE_CFG = null;
+let CFG_PROMISE = null;
+
+function ensureConfig() {
+  if (!CFG_PROMISE) CFG_PROMISE = loadDownloadConfig();
+  return CFG_PROMISE;
+}
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function applySiteInfo() {
+  const s = (SITE_CFG && SITE_CFG.site) || {};
+  if (s.title) {
+    const t = document.getElementById('siteTitle');
+    if (t) t.textContent = s.title;
+    const pt = document.getElementById('pageTitle');
+    if (pt) pt.textContent = s.title;
+  }
+  if (s.logo) {
+    const l = document.getElementById('siteLogo');
+    if (l) l.src = s.logo;
+  }
+  if (s.subtitle) {
+    const sub = document.getElementById('siteSubtitle');
+    if (sub) sub.textContent = s.subtitle;
+  }
+  if (s.version) {
+    const ver = document.getElementById('siteVersion');
+    if (ver) ver.textContent = 'v' + String(s.version).replace(/^v/i, '');
+  }
+}
+
+async function loadData(name, fallback) {
+  try {
+    const res = await fetch('data/' + name + '.json?t=' + Date.now() + '&r=' + Math.random(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const d = await res.json();
+    return Array.isArray(d) ? d : (fallback || []);
+  } catch (e) {
+    return Array.isArray(fallback) ? fallback : [];
+  }
+}
+
+function getInitials(name) {
+  return name ? name.slice(0, 1).toUpperCase() : '?';
+}
+
+function renderContributors(list) {
+  const container = document.getElementById('contributors-list');
+  if (!container) return;
+  if (!Array.isArray(list) || !list.length) {
+    container.innerHTML = '<div class="error-msg">暂无合作共创人员</div>';
+    return;
+  }
+  container.innerHTML = list.map(x => `
+    <div class="contributor-card" data-name="${(x.name || '').toLowerCase()}">
+      ${x.avatar ? `<img class="contributor-avatar" src="${x.avatar}" alt="${x.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="contributor-avatar" style="display:none">${getInitials(x.name)}</div>` : `<div class="contributor-avatar">${getInitials(x.name)}</div>`}
+      <div class="contributor-info">
+        <div class="contributor-name" title="${x.name}">${x.name}</div>
+        ${x.role ? `<div class="contributor-role">${x.role}</div>` : ''}
+        ${x.desc ? `<div class="contributor-desc">${x.desc}</div>` : ''}
+        ${x.social ? `<div class="contributor-social">${x.social}</div>` : ''}
+        ${x.qq ? `<button class="copy-btn contributor-qq" type="button" data-url="${x.qq}" title="点击复制 QQ 群号">点我复制群号</button>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function formatDateToChinese(d) {
+  if (!d || d.length !== 8) return '----';
+  return d.slice(0, 4) + '年' + d.slice(4, 6) + '月' + d.slice(6, 8) + '日';
+}
+
+function isRecent(d) {
+  if (!d || d.length !== 8) return false;
+  const y = parseInt(d.slice(0, 4));
+  const m = parseInt(d.slice(4, 6)) - 1;
+  const day = parseInt(d.slice(6, 8));
+  return (Date.now() - new Date(y, m, day).getTime()) / 86400000 <= 2;
+}
+
+/* ===== 点播接口 ===== */
+async function fetchListText() {
+  if (rawListText !== null) return rawListText;
+  const res = await fetch('list.txt?t=' + Date.now() + '&r=' + Math.random(), {
+    cache: 'no-store',
+    headers: { 'Cache-Control': 'no-cache' }
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  rawListText = await res.text();
+  return rawListText;
+}
+
+function parseItems(text) {
+  if (!text || !text.trim()) return [];
+  return text.trim().split('\n').filter(l => l.trim()).map(line => {
+    const p = line.split('|').map(s => s.trim());
+    if (!p[0]) return null;
+    return {
+      file: p[0],
+      name: p[0].replace(/\.json$/i, ''),
+      date: p[1] || '',
+      size: p[2] || '',
+      origUrl: p[3] || '',
+      weight: API_WEIGHTS.hasOwnProperty(p[0]) ? API_WEIGHTS[p[0]] : 999
+    };
+  }).filter(Boolean);
+}
+
+let HEALTH = null;
+let HEALTH_LOADING = null;
+
+function loadHealth() {
+  if (HEALTH_LOADING) return HEALTH_LOADING;
+  HEALTH_LOADING = fetch('health.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .catch(() => null)
+    .then(d => { HEALTH = d; return d; });
+  return HEALTH_LOADING;
+}
+
+
+/* 单条线路状态：只输出一个小圆点（绿=正常 黄=可疑 红=异常），详情放 title */
+function statusClass(st) {
+  if (!st) return 'st-none';
+  if (st.ok) return 'st-ok';
+  if (st.err === 'HTMLBody') return 'st-warn';
+  if (st.err === 'EmptyBody') return 'st-bad';
+  if (st.code >= 400) return 'st-bad';
+  if (st.code >= 300) return 'st-warn';
+  if (st.err === 'DNS') return st.doh ? 'st-warn' : 'st-bad';
+  if (st.err === 'Timeout') return 'st-bad';
+  if (st.err === 'no-url') return 'st-none';
+  return 'st-bad';
+}
+
+function statusLabel(st) {
+  if (!st) return '未检测';
+  if (st.ok) return st.ms ? '正常 ' + st.ms + 'ms' : '正常';
+  if (st.err === 'HTMLBody') return '源站返回网页（疑似屏蔽）';
+  if (st.err === 'EmptyBody') return '无内容';
+  if (st.code >= 400) return 'HTTP ' + st.code;
+  if (st.code >= 300) return '跳转 HTTP ' + st.code;
+  if (st.err === 'DNS') return st.doh ? '解析抖动' : '解析失败';
+  if (st.err === 'Timeout') return '超时';
+  if (st.err === 'no-url') return '无原始链接';
+  return '连接失败';
+}
+
+function statusPill(st, url) {
+  const cls = statusClass(st);
+  const tip = statusLabel(st)
+    + (url ? '\n线路：' + url : '')
+    + (st && st.ua ? '\n指纹：' + st.ua : '')
+    + (st && typeof st.local === 'boolean' ? '\n本站镜像：' + (st.local ? '有' : '无') : '');
+  return '<span class="hstatus dot ' + cls + '" title="' + esc(tip) + '"><i></i></span>';
+}
+
+
+function healthSummary(tally, label) {
+  if (!tally || !tally.total) return '';
+  const total = tally.total;
+  const ok = tally.ok;
+  const soft = tally.soft;
+  const bad = total - ok - soft;
+  const pct = n => (n / total * 100).toFixed(1) + '%';
+  return '<div class="health-summary">'
+    + '<div class="hs-top"><span><span class="health-dot"></span>' + label + '</span>'
+    + '<span><b class="health-ok">' + ok + '</b> / ' + total + ' 正常'
+    + (soft ? '，<b class="health-soft">' + soft + '</b> 存疑' : '')
+    + (bad ? '，<b class="health-bad">' + bad + '</b> 异常' : '') + '</span>'
+    + '<span class="hs-time">检测时间 ' + (HEALTH.generated_at || '') + '</span></div>'
+    + '<div class="hs-bar"><span class="hs-okseg" style="width:' + pct(ok) + '"></span>'
+    + (soft ? '<span class="hs-softseg" style="width:' + pct(soft) + '"></span>' : '')
+    + (bad ? '<span class="hs-badseg" style="width:' + pct(bad) + '"></span>' : '') + '</div>'
+    + '<div class="hs-legend"><span><i style="background:var(--ok)"></i>正常 ' + ok + '</span>'
+    + (soft ? '<span><i style="background:var(--warn)"></i>存疑 ' + soft + '</span>' : '')
+    + (bad ? '<span><i style="background:var(--bad)"></i>异常 ' + bad + '</span>' : '') + '</div></div>';
+}
+
+function renderApi() {
+  const container = document.getElementById('listContainer');
+  ensureConfig().then(() => loadHealth()).then(() => fetchListText()).then(text => {
+    const tip = document.getElementById('apiLoading');
+    if (tip) tip.style.display = 'none';
+
+    let items = parseItems(text);
+    if (!items.length) {
+      container.innerHTML = '<div class="error-msg">⚠️ 接口列表为空，请检查 list.txt</div>';
+      return;
+    }
+
+    // 模糊匹配：接口名里包含任一关键词即算命中
+    const ri = items.filter(i => {
+      const lower = i.name.toLowerCase();
+      return ROTATE_KEYWORDS.some(kw => lower.includes(kw.toLowerCase()));
+    });
+
+    const top = getTopItem(ri);
+    if (top) {
+      top.weight = Number.MIN_SAFE_INTEGER;
+    }
+
+    items.sort((a, b) => a.weight - b.weight);
+
+    let html = '';
+    const tally = { total: 0, ok: 0, soft: 0 };
+    items.forEach(it => {
+      const isNew = isRecent(it.date);
+      const hEntry = HEALTH && HEALTH.api && HEALTH.api[it.file];
+      const urlsMap = (hEntry && hEntry.urls) || null;
+      const statOf = u => (urlsMap ? urlsMap[u] : (u === it.origUrl ? hEntry : null));
+      const lineRow = (cls, tag, u) => {
+        const sc = statusClass(statOf(u));
+        tally.total++;
+        if (sc === 'st-ok') tally.ok++;
+        else if (sc === 'st-warn') tally.soft++;
+        return `<div class="url-line${cls ? ' ' + cls : ''}">`
+        + `<div class="url-line-top">${statusPill(statOf(u), u)}<span class="url-tag">${tag}</span>`
+        + `<button class="copy-btn" data-url="${u}">复制</button>`
+        + `<button class="decrypt-btn" data-decrypt="${u}" title="解密并复制明文配置">解密</button>`
+        + `<button class="viewsrc-btn" data-decrypt="${u}" data-name="${esc(it.name)}" title="查看解密后的站源列表">查看站源</button></div>`
+        + `<span class="url-text">${u}</span></div>`;
+      };
+      let lines = '';
+      if (it.origUrl) {
+        lines += lineRow('orig-line', '原始线路', it.origUrl);
+      }
+      const mainU = API_DOMAINS[0].base + it.name + '.json';
+      lines += lineRow('main-line', API_DOMAINS[0].tag, mainU);
+      if (API_DOMAINS.length > 1) {
+        lines += '<details class="backup-toggle"><summary>\uD83D\uDCE6 备份线路 ' + (API_DOMAINS.length - 1) + ' 条 \u25BE</summary><div class="backup-lines">';
+        API_DOMAINS.slice(1).forEach(d => {
+          lines += lineRow('', d.tag, d.base + it.name + '.json');
+        });
+        lines += '</div></details>';
+      }
+      html += `<div class="api-item" data-name="${it.name.toLowerCase()}">
+        <div class="api-item-header">
+          <div class="api-item-name" title="${it.name}">${it.name}</div>
+          <div class="api-item-meta">
+            <span class="${isNew ? 'badge-new' : 'badge-old'}">备份时间 ${formatDateToChinese(it.date)}</span>
+            ${it.size ? '&nbsp;&nbsp;' + it.size : ''}
+          </div>
+        </div>
+        <div class="api-item-urls">${lines}</div>
+      </div>`;
+    });
+    container.innerHTML = (currentMode === 'simple' ? '' : healthSummary(tally, '接口线路检测')) + html;
+  }).catch(err => {
+    const tip = document.getElementById('apiLoading');
+    if (tip) tip.style.display = 'none';
+    container.innerHTML = `<div class="error-msg">❌ 接口加载失败：${err.message || err}</div>`;
+  });
+}
+
+/* ===== 直播接口 ===== */
+async function fetchLiveText() {
+  if (rawLiveText !== null) return rawLiveText;
+  const res = await fetch('livelist.txt?t=' + Date.now(), { cache: 'no-store' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  rawLiveText = await res.text();
+  return rawLiveText;
+}
+
+function parseLiveItems(text) {
+  if (!text || !text.trim()) return [];
+  return text.trim().split('\n').filter(l => l.trim()).map(line => {
+    const p = line.split('|').map(s => s.trim());
+    if (!p[0]) return null;
+    return {
+      name: p[0] || '',
+      displayName: p[0].replace(/\.[^.]+$/, ''),
+      date: p[1] || '',
+      size: p[2] || '',
+      origUrl: p[3] || '',
+      source: p[4] || '',
+      ua: p[5] || ''
+    };
+  }).filter(Boolean);
+}
+
+function renderLiveList() {
+  const container = document.getElementById('liveListContainer');
+  const loading = document.getElementById('liveLoading');
+  ensureConfig().then(() => loadHealth()).then(() => fetchLiveText()).then(text => {
+    if (loading) loading.style.display = 'none';
+    const items = parseLiveItems(text);
+    if (!items.length) {
+      container.innerHTML = '<div class="error-msg">⚠️ 直播列表为空，请检查 livelist.txt</div>';
+      return;
+    }
+    const tally = { total: 0, ok: 0, soft: 0 };
+    const statOf = (it, u) => {
+      const e = HEALTH && HEALTH.live && HEALTH.live[it.name];
+      if (e && e.urls) return e.urls[u] || null;
+      return u === it.origUrl ? e : null;
+    };
+    const lineRow = (it, cls, tag, u) => {
+      const st = statOf(it, u);
+      const sc = statusClass(st);
+      tally.total++;
+      if (sc === 'st-ok') tally.ok++;
+      else if (sc === 'st-warn') tally.soft++;
+      return `<div class="live-url-line${cls ? ' ' + cls : ''}"><div class="live-url-body">`
+        + statusPill(st, u)
+        + `<span class="live-url-tag">${tag}</span>`
+        + `<span class="live-url-text">${u}</span>`
+        + `<button class="copy-btn" data-url="${u}">复制</button></div></div>`;
+    };
+    let html = '';
+    items.forEach(it => {
+      const isNew = isRecent(it.date);
+      let urls = '';
+      if (it.origUrl) {
+        urls += `<div class="live-url-line"><div class="live-info-inline"><span>来源：${it.source || '未知'}</span>${it.ua ? `<span class="sep">|</span><span>UA：${it.ua}</span>` : ''}</div></div>`;
+        urls += lineRow(it, 'orig-line', '原始线路', it.origUrl);
+      }
+      urls += lineRow(it, 'main-line', LIVE_DOMAINS[0].tag, LIVE_DOMAINS[0].base + it.name);
+      if (LIVE_DOMAINS.length > 1) {
+        urls += '<details class="backup-toggle"><summary>\uD83D\uDCE6 备份线路 ' + (LIVE_DOMAINS.length - 1) + ' 条 \u25BE</summary><div class="backup-lines">';
+        LIVE_DOMAINS.slice(1).forEach(d => {
+          urls += lineRow(it, '', d.tag, d.base + it.name);
+        });
+        urls += '</div></details>';
+      }
+      html += `<div class="live-item" data-name="${it.displayName.toLowerCase()}">
+        <div class="live-item-header">
+          <div class="live-item-name" title="${it.displayName}">${it.displayName}</div>
+          <div class="live-item-meta">
+            <span class="${isNew ? 'live-badge-new' : 'live-badge-old'}">备份时间 ${formatDateToChinese(it.date)}</span>
+            ${it.size ? '&nbsp;&nbsp;' + it.size : ''}
+          </div>
+        </div>
+        <div class="live-item-urls">${urls}</div>
+      </div>`;
+    });
+    container.innerHTML = healthSummary(tally, '直播源线路检测') + html;
+  }).catch(err => {
+    if (loading) loading.style.display = 'none';
+    container.innerHTML = `<div class="error-msg">❌ 直播列表加载失败：${err.message || err}</div>`;
+  });
+}
+
+/* ===== 下载：整行卡片配色 ===== */
+function dlInitial(name) {
+  const t = String(name == null ? '' : name).trim();
+  const c = Array.from(t);
+  return c.length ? c[0] : '?';
+}
+
+function dlShortId(u) {
+  const s = String(u || '').replace(/^https?:\/\//i, '');
+  if (s.length <= 48) return s;
+  const i = s.indexOf('/');
+  if (i < 0) return s;
+  return s.slice(0, i) + '/…/' + s.slice(s.lastIndexOf('/') + 1);
+}
+
+/* ===== 下载资源 ===== */
+async function renderDownloads(force) {
+  const container = document.getElementById('downloads-content');
+  if (!container || (container.dataset.rendered && !force)) return;
+  container.dataset.rendered = 'true';
+  container.innerHTML = '<div class="loading">⏳ 正在加载下载资源...</div>';
+  const sources = await loadData('downloads', []);
+  if (!sources.length) {
+    container.innerHTML = '<div class="error-msg">⚠️ 未配置下载源</div>';
+    return;
+  }
+  let html = '';
+  for (const src of sources) {
+    const group = String(src.name || '');
+    let section = `<div class="dl-section">`;
+    if (group) section += `<div class="dl-section-title">${esc(group)}</div>`;
+    if (src.description) section += `<div class="dl-section-desc">${esc(src.description)}</div>`;
+    section += `<div class="dl-list">`;
+    (src.list || []).forEach(i => {
+      const name = String(i.name || '下载');
+      const pkg = String(i.pkg || '');
+      const ver = String(i.version || '');
+      const sub = [ver, pkg].filter(Boolean).join(' - ');
+      let host = '';
+      try { host = new URL(i.url || '').host; } catch (e) { host = ''; }
+      const subLine = sub || host;
+      const idLine = String(i.id || i.url || '');
+      const initial = esc(dlInitial(name));
+      const icon = i.icon
+        ? `<img class="dl-icon" src="${esc(i.icon)}" alt="" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"><div class="dl-icon-ph" style="display:none">${initial}</div>`
+        : `<div class="dl-icon-ph">${initial}</div>`;
+      section += `<a class="dl-row" href="${esc(i.url || '#')}" target="_blank" rel="noopener noreferrer" data-name="${esc((name + ' ' + subLine + ' ' + group).toLowerCase())}">
+        ${icon}
+        <div class="dl-main">
+          <div class="dl-name">${esc(name)}</div>
+          ${subLine ? `<div class="dl-sub">${esc(subLine)}</div>` : ''}
+          ${idLine ? `<div class="dl-id">${esc(dlShortId(idLine))}</div>` : ''}
+        </div>
+        <span class="dl-btn">下载</span>
+      </a>`;
+    });
+    html += section + '</div></div>';
+  }
+  container.innerHTML = html;
+}
+
+/* ===== 弹幕接口 ===== */
+let DANMU_SOURCES = [];
+
+function renderDanmu() {
+  const container = document.getElementById('danmu-content');
+  if (!container) return;
+  container.innerHTML = '<div class="loading">⏳ 正在加载弹幕接口...</div>';
+  loadData('danmu').then(list => {
+    DANMU_SOURCES = list;
+    let rows = '';
+    DANMU_SOURCES.forEach(s => {
+      rows += `<div class="danmu-item" data-name="${esc((s.name || '').toLowerCase())}" style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:#fff;border-radius:50px;border:1px solid #e0e6ed;margin-top:8px">
+        <span style="flex:0 0 auto;font-size:.78rem;font-weight:600;color:#0b1e33">${esc(s.name)}</span>
+        <span style="flex:1;font-size:.75rem;color:#2563eb;word-break:break-all">${esc(s.url)}</span>
+        <button class="copy-btn" data-url="${esc(s.url)}">复制</button>
+      </div>`;
+    });
+    container.innerHTML = `<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;border:1px solid #eef2f7">
+      <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">💬 弹幕接口</h3>
+      <p style="font-size:.76rem;color:#5a6f88;margin-bottom:4px">共 ${DANMU_SOURCES.length} 条，点击「复制」把地址填入播放器的弹幕接口。</p>
+      ${rows}
+    </div>`;
+  });
+}
+
+/* ===== EPG 接口（电子节目单，直播模块用） ===== */
+let EPG_SOURCES = [];
+
+function renderEpg() {
+  const container = document.getElementById('epg-content');
+  if (!container || container.dataset.rendered) return;
+  container.dataset.rendered = 'true';
+  container.innerHTML = '<div class="loading">⏳ 正在加载 EPG 接口...</div>';
+  loadData('epg').then(list => {
+    EPG_SOURCES = list;
+    let rows = '';
+    EPG_SOURCES.forEach(s => {
+      rows += `<div class="epg-item" data-name="${esc(((s.name || '') + ' ' + (s.fmt || '') + ' ' + (s.url || '')).toLowerCase())}">
+        <div class="epg-item-main">
+          <div class="epg-item-name">${esc(s.name)}<span class="epg-fmt">${esc(s.fmt)}</span></div>
+          <div class="epg-item-url">${esc(s.url)}</div>
+        </div>
+        <button class="copy-btn" data-url="${esc(s.url)}">复制</button>
+      </div>`;
+    });
+    container.innerHTML = `<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;border:1px solid #eef2f7">
+      <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">📺 EPG 接口</h3>
+      <p style="font-size:.76rem;color:#5a6f88;margin-bottom:6px">共 ${EPG_SOURCES.length} 个电子节目单接口（社区推荐收录）。用法：TVBox / 影视 → 设置 → 直播 → EPG 接口地址 → 粘贴下面地址。XMLTV 为标准 xmltv 格式，DIYP 为 DIYP 类播放器的网页接口，「推荐」为社区整合的合集地址。</p>
+      <div class="epg-list">${rows}</div>
+    </div>`;
+  });
+}
+
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* ===== 落雪音源 ===== */
+const YINYUAN_BASE = 'https://tvbox.moliys.icu/yinyuan/';
+
+function renderYinyuan() {
+  const container = document.getElementById('yinyuan-content');
+  if (!container) return;
+  container.innerHTML = '<div class="loading">⏳ 正在加载音源列表...</div>';
+  fetch('yinyuan/list.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(res => { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+    .then(list => {
+      if (!Array.isArray(list) || !list.length) {
+        container.innerHTML = '<div class="error-msg">⚠️ 暂无音源文件</div>';
+        return;
+      }
+      let rows = '';
+      list.forEach(it => {
+        const url = YINYUAN_BASE + encodeURIComponent(it.file);
+        const size = it.size ? (it.size / 1024).toFixed(1) + ' KB' : '';
+        rows += `<div class="api-item" data-name="${(it.name || '').toLowerCase()}">
+          <div class="api-item-header">
+            <div class="api-item-name" title="${it.name}">${it.name}</div>
+            <div class="api-item-meta">${size ? '<span class="badge-new">' + size + '</span>' : ''}</div>
+          </div>
+          <div class="api-item-urls">
+            <div class="url-line"><span class="url-tag">音源</span><span class="url-text">${url}</span><button class="copy-btn" data-url="${url}">复制</button></div>
+          </div>
+        </div>`;
+      });
+      container.innerHTML = `<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;border:1px solid #eef2f7">
+        <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">🎵 落雪音源</h3>
+        <p style="font-size:.76rem;color:#5a6f88;margin-bottom:4px">共 ${list.length} 个音源，点击「复制」后打开洛雪音乐 → 设置 → 自定义音源 → 粘贴地址导入并启用。</p>
+        <div class="api-list">${rows}</div>
+      </div>`;
+    })
+    .catch(err => {
+      container.innerHTML = `<div class="error-msg">❌ 音源列表加载失败：${err.message || err}</div>`;
+    });
+}
+
+/* ===== 书源收集 ===== */
+let SHUYUAN_SOURCES = [];
+
+function renderShuyuan() {
+  const container = document.getElementById('shuyuan-content');
+  if (!container) return;
+  container.innerHTML = '<div class="loading">⏳ 正在加载书源...</div>';
+  loadData('shuyuan').then(list => {
+    SHUYUAN_SOURCES = list;
+    let rows = '';
+    SHUYUAN_SOURCES.forEach(s => {
+      rows += `<div class="api-item" data-name="${esc((s.name || '').toLowerCase())}">
+        <div class="api-item-header">
+          <div class="api-item-name" title="${esc(s.name)}">${esc(s.name)}</div>
+          <div class="api-item-meta"><span class="badge-new">${esc(s.count)} 个源</span></div>
+        </div>
+        <div class="api-item-urls">
+          <div class="url-line"><span class="url-tag">导入</span><span class="url-text">${esc(s.url)}</span><button class="copy-btn" data-url="${esc(s.url)}">复制</button></div>
+        </div>
+        ${s.desc ? `<div style="font-size:.68rem;color:#8b9eb0;margin-top:6px">${esc(s.desc)}</div>` : ''}
+      </div>`;
+    });
+    container.innerHTML = `<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;border:1px solid #eef2f7">
+      <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">📚 书源收集</h3>
+      <p style="font-size:.76rem;color:#5a6f88;margin-bottom:4px">共 ${SHUYUAN_SOURCES.length} 组书源。使用方法：阅读3.0（Legado）→ 我的 → 书源管理 → 右上角菜单 → 网络导入 → 粘贴地址 → 确定。</p>
+      <div class="api-list">${rows}</div>
+    </div>`;
+  });
+}
+
+/* ===== 漫画源（Legado 漫画源合集，已剔除成人向） ===== */
+const COMIC_SOURCE_URL = 'https://tvbox.moliys.icu/comicSource.json';
+
+function renderComic() {
+  const container = document.getElementById('comic-content');
+  if (!container || container.dataset.rendered) return;
+  container.dataset.rendered = 'true';
+  container.innerHTML = '<div class="loading">⏳ 正在加载漫画源...</div>';
+  fetch('comicSource.json?t=' + Date.now())
+    .then(r => r.json())
+    .then(list => {
+      const arr = Array.isArray(list) ? list : [];
+      const esc = v => String(v || '').replace(/"/g, '&quot;');
+      let rows = '';
+      arr.forEach(s => {
+        const name = s.bookSourceName || '未命名';
+        const url = s.bookSourceUrl || '';
+        let host = '';
+        try { host = new URL(url).host; } catch (e) { host = ''; }
+        rows += `<div class="api-item" data-name="${esc((name + ' ' + host).toLowerCase())}">
+          <div class="api-item-header">
+            <div class="api-item-name" title="${esc(name)}">${name}</div>
+            ${host ? `<div class="api-item-meta"><span class="badge-new">${esc(host)}</span></div>` : ''}
+          </div>
+          ${url ? `<div class="api-item-urls">
+            <div class="url-line"><span class="url-tag">源地址</span><span class="url-text">${esc(url)}</span><button class="copy-btn" data-url="${esc(url)}">复制</button></div>
+          </div>` : ''}
+        </div>`;
+      });
+      container.innerHTML = `<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;border:1px solid #eef2f7">
+        <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">📖 漫画源</h3>
+        <p style="font-size:.76rem;color:#5a6f88;margin-bottom:8px">共 ${arr.length} 个 Legado 漫画源（已剔除成人向）。使用方法：阅读3.0（Legado）→ 我的 → 书源管理 → 右上角菜单 → 网络导入 → 粘贴下面地址 → 确定。</p>
+        <div class="comic-import-box">
+          <div class="url-line"><span class="url-tag">导入</span><span class="url-text">${COMIC_SOURCE_URL}</span><button class="copy-btn" data-url="${COMIC_SOURCE_URL}">复制</button></div>
+        </div>
+        <div class="api-list">${rows}</div>
+      </div>`;
+    })
+    .catch(err => {
+      container.innerHTML = `<div class="error-msg">❌ 漫画源加载失败：${err.message || err}</div>`;
+    });
+}
+
+/* ===== 在线影视(取自 沫离影视指南 · 在线影视 分类) ===== */
+let ONLINE_SITES = [];
+
+function renderOnline() {
+  const container = document.getElementById('online-content');
+  if (!container || container.dataset.rendered) return;
+  container.dataset.rendered = 'true';
+  container.innerHTML = '<div class="loading">⏳ 正在加载在线影视...</div>';
+  loadData('online').then(list => {
+    ONLINE_SITES = list;
+    let cards = '';
+    ONLINE_SITES.forEach(s => {
+      const ch = (s.name || '?').charAt(0);
+      const raw = s.icon || '';
+      const src = !raw ? '' : (raw.indexOf('http') === 0 || raw.indexOf('/') > -1 ? raw : 'online-icons/' + raw);
+      const icon = src
+        ? `<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`
+        : '';
+      cards += `<a class="download-card" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" data-name="${esc(((s.name || '') + ' ' + (s.desc || '')).toLowerCase())}">
+        <span class="site-icon-wrap"><span class="site-ph">${esc(ch)}</span>${icon}</span>
+        <div style="flex:1;width:100%;margin-top:auto;">
+          <div class="online-name" title="${esc(s.name)}">${esc(s.name)}</div>
+          <div class="online-desc">${esc(s.desc)}</div>
+        </div>
+      </a>`;
+    });
+    container.innerHTML = `<div style="background:#f8fafc;border-radius:12px;padding:14px 16px;border:1px solid #eef2f7">
+      <h3 style="font-size:.92rem;font-weight:600;color:#0b1e33;margin-bottom:4px">🎬 在线影视</h3>
+      <p style="font-size:.76rem;color:#5a6f88;margin-bottom:10px">共 ${ONLINE_SITES.length} 个在线影视站点，点击卡片直达；标注「需梯子」的需自备网络环境。</p>
+      <div class="online-grid">${cards}</div>
+    </div>`;
+  });
+}
+
+/* ===== 解析工具 ===== */
+const PARSE_DECRYPT_API = 'https://feiyangdigital.v1.mk/api/jiemi.php?url=';
+const PARSE_EPG_XML = 'https://epg.v1.mk/fy.xml';
+const PARSE_LOGO_BASE = 'https://epg.v1.mk/logo/';
+
+let parseInited = false;
+let convertInited = false;
+let parseLogoList = null;
+let parseLogoPromise = null;
+let parseOpenCCPromise = null;
+let parseDecryptPure = '';
+let parseConvertIsTxt = false;
+
+function renderParse() {
+  if (parseInited) return;
+  parseInited = true;
+  document.getElementById('decryptBtn').addEventListener('click', parseDecrypt);
+  document.getElementById('decryptCopyBtn').addEventListener('click', function () {
+    parseCopyText(parseDecryptPure, this);
+  });
+}
+
+function renderConvert() {
+  if (convertInited) return;
+  convertInited = true;
+  document.getElementById('convertFile').addEventListener('change', parseOnFileChange);
+  document.getElementById('convertSource').addEventListener('input', parseCheckContent);
+  document.getElementById('txtToM3uBtn').addEventListener('click', parseTxtToM3u);
+  document.getElementById('m3uToTxtBtn').addEventListener('click', parseM3uToTxt);
+  document.getElementById('convertCopyBtn').addEventListener('click', function () {
+    parseCopyText(document.getElementById('convertResult').value, this);
+  });
+  document.getElementById('convertDownloadBtn').addEventListener('click', parseDownloadResult);
+}
+
+function parseSetStatus(id, text, ok) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text || '';
+  el.style.color = ok === true ? '#3b9b6c' : (ok === false ? '#dc2626' : '#8fa3b8');
+}
+
+function parseFallbackCopy(text, done) {
+  const input = document.createElement('textarea');
+  input.value = text;
+  input.style.position = 'fixed';
+  input.style.opacity = '0';
+  document.body.appendChild(input);
+  input.focus();
+  input.select();
+  try { document.execCommand('copy'); } catch (_) {}
+  document.body.removeChild(input);
+  done();
+}
+
+function parseCopyText(text, btn) {
+  if (!text) return;
+  const done = () => {
+    const old = btn.textContent;
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => { btn.textContent = old; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => parseFallbackCopy(text, done));
+  } else {
+    parseFallbackCopy(text, done);
+  }
+}
+
+async function parseDecrypt() {
+  const url = (document.getElementById('decryptUrl').value || '').trim();
+  const btn = document.getElementById('decryptBtn');
+  const out = document.getElementById('decryptResult');
+  const copyBtn = document.getElementById('decryptCopyBtn');
+  if (!/http(s?):\/\/\S*/.test(url)) {
+    parseSetStatus('decryptStatus', '⚠️ 请输入正确的 TVBOX 配置链接', false);
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '解密中...';
+  out.value = '';
+  copyBtn.disabled = true;
+  parseDecryptPure = '';
+  parseSetStatus('decryptStatus', '正在请求解密接口...', null);
+  try {
+    const res = await fetch(PARSE_DECRYPT_API + encodeURIComponent(url), { cache: 'no-store' });
+    const data = await res.text();
+    out.value = data;
+    const m = data.match(/{[\s\S]*}/);
+    parseDecryptPure = m ? m[0] : data;
+    copyBtn.disabled = !data;
+    parseSetStatus('decryptStatus', m ? '✅ 解密完成，可复制明文配置' : '⚠️ 已返回内容，未识别到 JSON 段，已回退为原文', m ? true : null);
+  } catch (e) {
+    parseSetStatus('decryptStatus', '❌ 解密失败：' + (e.message || e), false);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '解密';
+  }
+}
+
+function parseLoadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('组件加载失败：' + src));
+    document.head.appendChild(s);
+  });
+}
+
+function parseEnsureOpenCC() {
+  if (window.OpenCC) return Promise.resolve(window.OpenCC);
+  if (!parseOpenCCPromise) {
+    parseOpenCCPromise = parseLoadScript('tools/opencc.js')
+      .then(() => window.OpenCC)
+      .catch(e => { parseOpenCCPromise = null; throw e; });
+  }
+  return parseOpenCCPromise;
+}
+
+function parseEnsureLogoList() {
+  if (parseLogoList) return Promise.resolve(parseLogoList);
+  if (!parseLogoPromise) {
+    parseLogoPromise = fetch('tools/logo.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(d => { parseLogoList = Array.isArray(d) ? d : []; return parseLogoList; })
+      .catch(e => { parseLogoPromise = null; throw e; });
+  }
+  return parseLogoPromise;
+}
+
+function parseCheckContent() {
+  const s = document.getElementById('convertSource').value;
+  const hasM3u = s.includes('#EXTINF') || s.includes('#EXTM3U');
+  parseConvertIsTxt = !hasM3u;
+  document.getElementById('txtToM3uBtn').disabled = hasM3u || !s.trim();
+  document.getElementById('m3uToTxtBtn').disabled = !hasM3u;
+}
+
+function parseOnFileChange(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (!/\.(txt|m3u)$/i.test(file.name)) {
+    parseSetStatus('convertStatus', '⚠️ 只支持 .txt 和 .m3u 文件', false);
+    e.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    document.getElementById('convertSource').value = String(ev.target.result).replace(/&amp;/g, '&');
+    parseCheckContent();
+    parseSetStatus('convertStatus', '✅ 文件已载入：' + file.name, true);
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function parseIsValidLine(iptv, line) {
+  return iptv && iptv.length >= 2 && iptv[0] && iptv[1] && iptv[1] !== 'undefined' && !line.includes('genre');
+}
+
+function parseDetermineGroup(name) {
+  const groups = {
+    央视: ['CCTV', '央视', '中央', 'CGTN'],
+    卫视: ['卫视'],
+    北京: ['BTV'],
+    港澳台: ['翡翠', '明珠', '民视', '台视', '华视', 'TVB', '纬来', '年代', '原住民', '中视', '澳亚', '东森', '好消息电视台', '大爱', '博斯', 'ELEVEN', 'FOX', 'ASTRO', 'HBO', 'NIPPON', 'NHK', 'GSTV', '无线'],
+    香港: ['凤凰']
+  };
+  const upper = name.toUpperCase();
+  for (const g of Object.keys(groups)) {
+    if (groups[g].some(kw => upper.includes(kw))) return g;
+  }
+  return '其他';
+}
+
+function parseAdjustGroup(name, fallback) {
+  const m = name.toUpperCase().match(/北京|上海|NEWTV|IHOT|河北|山西|辽宁|吉林|黑龙江|江苏|浙江|安徽|福建|江西|山东|河南|湖北|湖南|广东|海南|四川|贵州|云南|陕西|甘肃|青海|台湾|香港|重庆/g);
+  return m ? m[0] : fallback;
+}
+
+function parseSanitizeName(channel) {
+  let tid = channel.toUpperCase()
+    .replace(/\[.*?\]|[0-9\.]+M|[0-9]{3,4}[pP]|[0-9\.]+FPS/g, '')
+    .trim()
+    .replace(/超清|高清$|蓝光|频道$|标清|FHD|HD$|HEVC|HDR|-|\s+/g, '')
+    .trim();
+  if (tid.includes('CCTV') && !tid.includes('CCTV4K')) {
+    let m = tid.match(/CCTV[0-9+]{1,2}[48]?K?/);
+    if (m) {
+      tid = m[0].replace(/4K/, '');
+    } else {
+      m = tid.match(/CCTV[^0-9]+/);
+      if (m) tid = m[0].replace(/CCTV/g, '');
+    }
+  } else {
+    tid = tid.replace(/BTV/g, '北京');
+  }
+  return tid;
+}
+
+function parseMatchTvg(query, list, converter) {
+  const simplified = converter(query);
+  let matched = '';
+  let priorityMatch = '';
+  let secondaryMatch = '';
+  const checked = new Set();
+
+  for (const epg of list) {
+    if (epg.toUpperCase() === simplified.toUpperCase()) return epg;
+  }
+
+  const upperQuery = simplified.toUpperCase();
+  for (const epg of list) {
+    if (epg.toUpperCase().startsWith(upperQuery)) {
+      if (/^\p{Script=Han}/u.test(epg)) {
+        if (!priorityMatch) priorityMatch = epg;
+      } else if (!secondaryMatch) {
+        secondaryMatch = epg;
+      }
+    }
+  }
+  if (priorityMatch) return priorityMatch;
+  if (secondaryMatch) return secondaryMatch;
+
+  for (let i = simplified.length; i > 0; i--) {
+    const sub = simplified.slice(0, i);
+    if (checked.has(sub)) continue;
+    checked.add(sub);
+    for (const epg of list) {
+      if (epg.includes(sub) && sub.length > matched.length) matched = epg;
+    }
+  }
+  return matched || '未知频道';
+}
+
+async function parseTxtToM3u() {
+  const btn = document.getElementById('txtToM3uBtn');
+  const out = document.getElementById('convertResult');
+  btn.disabled = true;
+  btn.textContent = '转换中...';
+  parseSetStatus('convertStatus', '正在加载频道库与转换组件...', null);
+  try {
+    const [OpenCCLib, logos] = await Promise.all([parseEnsureOpenCC(), parseEnsureLogoList()]);
+    const converter = OpenCCLib.Converter({ from: 'hk', to: 'cn' });
+    const lines = document.getElementById('convertSource').value.split('\n');
+    let result = '#EXTM3U x-tvg-url="' + PARSE_EPG_XML + '"\n';
+    lines.forEach(line => {
+      const iptv = line.split(',');
+      if (!parseIsValidLine(iptv, line)) return;
+      const group = parseAdjustGroup(iptv[0], parseDetermineGroup(iptv[0]));
+      const tid = parseSanitizeName(iptv[0]);
+      const tvg = parseMatchTvg(tid, logos, converter) || iptv[0];
+      const logourl = PARSE_LOGO_BASE + tvg + '.png';
+      result += `#EXTINF:-1,tvg-id="${tvg}" tvg-name="${tvg}" tvg-logo="${logourl}" group-title="${group}",${iptv[0]}\n${iptv[1]}\n`;
+    });
+    out.value = result;
+    parseRefreshConvertButtons();
+    parseSetStatus('convertStatus', '✅ 已转换为 m3u', true);
+  } catch (e) {
+    parseSetStatus('convertStatus', '❌ 转换失败：' + (e.message || e), false);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'txt 转 m3u';
+  }
+}
+
+function parseM3uToTxt() {
+  const src = document.getElementById('convertSource').value.replace(/[\r\n]+/g, '@');
+  const re = /#EXTINF:-1(?:,tvg-id="[^"]*")?(?: tvg-name="[^"]*")?(?: tvg-logo="[^"]*")?(?: group-title="([^"]*)")?,([^@]+)@([^@]+)/g;
+  const matches = src.match(re);
+  if (!matches) {
+    parseSetStatus('convertStatus', '⚠️ 未识别到有效的 m3u 内容', false);
+    return;
+  }
+  const groups = {};
+  matches.forEach(m => {
+    const parts = m.match(/#EXTINF:-1(?:,tvg-id="[^"]*")?(?: tvg-name="[^"]*")?(?: tvg-logo="[^"]*")?(?: group-title="([^"]*)")?,([^@]+)@([^@]+)/);
+    const group = parts[1] || '自定义';
+    if (!groups[group]) groups[group] = [];
+    groups[group].push(parts[2] + ',' + parts[3]);
+  });
+  let result = '';
+  for (const g of Object.keys(groups)) {
+    result += g + ',#genre#\n\n' + groups[g].join('\n') + '\n\n';
+  }
+  document.getElementById('convertResult').value = result.trim();
+  parseRefreshConvertButtons();
+  parseSetStatus('convertStatus', '✅ 已转换为 txt', true);
+}
+
+function parseRefreshConvertButtons() {
+  const has = !!document.getElementById('convertResult').value;
+  document.getElementById('convertCopyBtn').disabled = !has;
+  document.getElementById('convertDownloadBtn').disabled = !has;
+}
+
+function parseDownloadResult() {
+  const text = document.getElementById('convertResult').value;
+  if (!text) return;
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = parseConvertIsTxt ? 'myiptv.m3u' : 'myiptv.txt';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+/* ===== 标签导航 ===== */
+const tabsData = [
+  { id: "api", label: "点播", hideSearch: false },
+  { id: "parse", label: "解密工具", hideSearch: true },
+  { id: "convert", label: "直播源转换", hideSearch: true },
+  { id: "online", label: "在线影视", hideSearch: false },
+  { id: "live", label: "直播", hideSearch: false },
+  { id: "epg", label: "EPG接口", hideSearch: false },
+  { id: "download", label: "下载", hideSearch: false },
+  { id: "danmu", label: "弹幕", hideSearch: true },
+  { id: "yinyuan", label: "音源", hideSearch: false },
+  { id: "shuyuan", label: "书源", hideSearch: false },
+  { id: "comic", label: "漫画源", hideSearch: false },
+  { id: "about", label: "关于", hideSearch: true }
+];
+
+function scrollTabIntoView(tab, smooth) {
+  const nav = document.getElementById('navTabs');
+  if (!nav || !tab) return;
+  const max = nav.scrollWidth - nav.clientWidth;
+  if (max <= 0) return;
+  const left = Math.max(0, Math.min(tab.offsetLeft - (nav.clientWidth - tab.offsetWidth) / 2, max));
+  if (typeof nav.scrollTo === 'function') nav.scrollTo({ left: left, behavior: smooth ? 'smooth' : 'auto' });
+  else nav.scrollLeft = left;
+}
+
+function renderTabs() {
+  const nav = document.getElementById('navTabs');
+  nav.innerHTML = tabsData.map(t => `<button class="nav-tab ${t.id === currentTabId ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`).join('');
+  nav.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+      nav.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      currentTabId = this.getAttribute('data-tab');
+      showPanel(currentTabId);
+    });
+  });
+  requestAnimationFrame(() => scrollTabIntoView(nav.querySelector('.nav-tab.active'), false));
+}
+
+function showPanel(tabId) {
+  if (searchBox) {
+    searchBox.value = '';
+    document.querySelectorAll('#api-panel .api-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('#live-panel .live-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('#yinyuan-panel .api-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('#shuyuan-panel .api-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('#comic-panel .api-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('#epg-panel .epg-item.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('.download-card.hidden').forEach(e => e.classList.remove('hidden'));
+    document.querySelectorAll('.dl-row.hidden').forEach(e => e.classList.remove('hidden'));
+  }
+  if (tabId === 'api') {
+    topSeed = Date.now() + Math.random();
+    renderApi();
+  }
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(tabId + '-panel');
+  if (panel) panel.classList.add('active');
+  if (tabId === 'parse') renderParse();
+  if (tabId === 'convert') renderConvert();
+  if (tabId === 'live') renderLiveList();
+  if (tabId === 'online') renderOnline();
+  if (tabId === 'download') renderDownloads();
+  if (tabId === 'danmu') renderDanmu();
+  if (tabId === 'epg') renderEpg();
+  if (tabId === 'yinyuan') renderYinyuan();
+  if (tabId === 'shuyuan') renderShuyuan();
+  if (tabId === 'comic') renderComic();
+  const t = tabsData.find(t => t.id === tabId);
+  if (searchBox) searchBox.style.display = (t && t.hideSearch) ? 'none' : '';
+  scrollTabIntoView(document.querySelector('#navTabs .nav-tab.active'), true);
+}
+
+/* ===== 搜索 ===== */
+function globalSearch() {
+  const kw = (searchBox.value || '').toLowerCase().trim();
+  document.querySelectorAll('#api-panel .api-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+  document.querySelectorAll('#live-panel .live-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+  document.querySelectorAll('#yinyuan-panel .api-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+  document.querySelectorAll('#shuyuan-panel .api-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+  document.querySelectorAll('#comic-panel .api-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+  document.querySelectorAll('#epg-panel .epg-item').forEach(e => {
+    const n = e.getAttribute('data-name') || '';
+    e.classList.toggle('hidden', !n.includes(kw));
+  });
+  document.querySelectorAll('#online-panel .download-card').forEach(c => {
+    const n = c.getAttribute('data-name') || '';
+    c.classList.toggle('hidden', !n.includes(kw));
+  });
+  if (currentMode !== 'simple') {
+    document.querySelectorAll('.download-card').forEach(c => {
+      const n = c.getAttribute('data-name') || '';
+      c.classList.toggle('hidden', !n.includes(kw));
+    });
+    document.querySelectorAll('.dl-row').forEach(c => {
+      const n = c.getAttribute('data-name') || '';
+      c.classList.toggle('hidden', !n.includes(kw));
+    });
+  }
+}
+
+/* ===== 搜索框位置 ===== */
+function positionSearchBox() {
+  if (currentMode === 'simple') {
+    if (searchBox.parentNode !== mainCard.parentNode) {
+      mainCard.parentNode.insertBefore(searchBox, mainCard);
+    }
+  } else {
+    if (searchBox.parentNode !== mainCard) {
+      navTabs.insertAdjacentElement('afterend', searchBox);
+    }
+  }
+}
+
+function updateBtnText() {
+  btn.innerHTML = currentMode === 'simple' ? '切换<br>全能版' : '切换<br>简洁版';
+}
+
+/* ===== 模式切换 ===== */
+btn.addEventListener('click', () => {
+  topSeed = Date.now() + Math.random();
+  currentMode = currentMode === 'simple' ? 'full' : 'simple';
+  localStorage.setItem(MODE_KEY, currentMode);
+  document.body.className = currentMode + '-mode';
+  updateBtnText();
+  if (currentMode !== 'simple') {
+    positionSearchBox();
+    renderTabs();
+    showPanel(currentTabId);
+  } else {
+    searchBox.style.display = '';
+    positionSearchBox();
+    renderApi();
+  }
+});
+
+/* ===== 启动 ===== */
+renderTabs();
+renderApi();
+ensureConfig().then(() => {
+  if (currentMode !== 'simple') renderDownloads();
+});
+</script>
+<!-- TVBOX-EMBED:JS -->
+<script>
+/* ===== App 内嵌版专属脚本（web 版第一行就 return，绝不干扰网页） ===== */
+(function () {
+  var NATIVE = window.__TVBOX_NATIVE__ || null;
+  if (!NATIVE) return;
+
+  var root = document.documentElement;
+  var FM_URL = 'https://fm365.space/';
+
+  /* ---------- 安全区：原生调用 window.__tvboxInsets(top, bottom) 传入 ---------- */
+  window.__tvboxInsets = function (top, bottom) {
+    root.style.setProperty('--sat', (Number(top) || 0) + 'px');
+    root.style.setProperty('--sab', (Number(bottom) || 0) + 'px');
+  };
+
+  /* ---------- 主题同步给原生，用于决定状态栏图标明暗 ---------- */
+  function syncTheme() {
+    try { NATIVE.setTheme(document.body.getAttribute('data-theme') === 'light'); } catch (e) {}
+  }
+  var _applyTheme = applyTheme;
+  applyTheme = function (t) { _applyTheme(t); syncTheme(); };
+  syncTheme();
+
+  /* ---------- 版本号展示 + 强制更新检查 ---------- */
+  var EFFECTIVE_VERSION_CODE = 0;
+  var EFFECTIVE_VERSION_NAME = '';
+  try {
+    var nv = JSON.parse((NATIVE.getVersion && NATIVE.getVersion()) || '{}');
+    if (Number(nv.code) > 0) EFFECTIVE_VERSION_CODE = Number(nv.code);
+    if (nv.name) EFFECTIVE_VERSION_NAME = String(nv.name);
+  } catch (e) {}
+  if (EFFECTIVE_VERSION_NAME) {
+    var subEl = document.querySelector('.subtitle-main');
+    if (subEl && !document.getElementById('appVersion')) {
+      var av = document.createElement('span');
+      av.id = 'appVersion';
+      av.className = 'site-version';
+      av.textContent = 'App ' + EFFECTIVE_VERSION_NAME;
+      subEl.appendChild(av);
+    }
+  }
+
+  var UPDATE_MANIFEST_URL = 'https://tvbox.moliys.icu/apk/version-moliys.js';
+  var NATIVE_UI = null;
+
+  function fmtSize(n) {
+    n = Number(n) || 0;
+    if (n >= 1048576) return (n / 1048576).toFixed(1) + ' MB';
+    if (n >= 1024) return Math.round(n / 1024) + ' KB';
+    return n + ' B';
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function () {});
+    }
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    } catch (e) {}
+    return Promise.resolve();
+  }
+
+  window.__tvboxOnProgress = function (pct, got, total) {
+    var ui = NATIVE_UI;
+    if (!ui) return;
+    var p = Math.max(0, Math.min(99, Number(pct) || 0));
+    ui.prog.classList.remove('indet');
+    ui.fill.style.width = p + '%';
+    ui.txt.textContent = '正在下载更新包… ' + p + '%（' + fmtSize(got) +
+      (total ? ' / ' + fmtSize(total) : '') + '）';
+  };
+
+  window.__tvboxOnDone = function (launched, msg) {
+    var ui = NATIVE_UI;
+    if (!ui) return;
+    ui.prog.classList.remove('indet');
+    ui.fill.style.width = '100%';
+    ui.txt.textContent = msg || '下载完成，正在唤起安装…';
+    ui.tip.textContent = launched
+      ? '若没有自动弹出安装界面，请到「文件管理 / 下载」里点开安装包手动安装。'
+      : '若未弹出安装界面，请点击通知栏的「更新包已下载完成」继续安装。';
+    ui.go.disabled = false;
+    ui.go.textContent = '重新下载';
+  };
+
+  window.__tvboxOnError = function (msg) {
+    var ui = NATIVE_UI;
+    if (!ui) return;
+    ui.prog.classList.remove('indet');
+    ui.txt.textContent = '下载失败：' + (msg || '未知错误');
+    ui.tip.textContent = '可点击「复制下载链接」在浏览器中手动下载。';
+    ui.go.disabled = false;
+    ui.go.textContent = '重试下载';
+  };
+
+  function showForceUpdate(info) {
+    if (document.getElementById('forceUpdateMask')) return;
+    var url = String(info.apkUrl || '');
+    var log = String(info.changelog || '本次更新包含数据与功能调整，请升级后继续使用。');
+    var mask = document.createElement('div');
+    mask.id = 'forceUpdateMask';
+    var card = document.createElement('div');
+    card.className = 'fu-card';
+    var h1 = document.createElement('div'); h1.className = 'fu-title'; h1.textContent = '发现新版本，需升级后使用';
+    var h2 = document.createElement('div'); h2.className = 'fu-ver';
+    h2.textContent = (info.versionName ? 'v' + info.versionName : '') +
+      (info.versionCode ? '（' + info.versionCode + '）' : '') +
+      (EFFECTIVE_VERSION_NAME ? '　当前 v' + EFFECTIVE_VERSION_NAME : '');
+    var logEl = document.createElement('div'); logEl.className = 'fu-log'; logEl.textContent = log;
+    var go = document.createElement('button'); go.className = 'fu-btn'; go.type = 'button'; go.textContent = '立即下载更新';
+    var cp = document.createElement('button'); cp.className = 'fu-btn ghost'; cp.type = 'button'; cp.textContent = '复制下载链接';
+    var prog = document.createElement('div'); prog.className = 'fu-prog';
+    var progTxt = document.createElement('div'); progTxt.className = 'fu-prog-txt'; progTxt.textContent = '正在下载更新包…';
+    var progTrack = document.createElement('div'); progTrack.className = 'fu-prog-bar';
+    var progFill = document.createElement('div'); progFill.className = 'fu-prog-fill';
+    progTrack.appendChild(progFill); prog.appendChild(progTxt); prog.appendChild(progTrack);
+    var tip = document.createElement('div'); tip.className = 'fu-tip';
+    tip.textContent = '下载完成后会自动弹出安装界面，选择「继续安装」即可覆盖安装（无需卸载）。';
+    card.appendChild(h1); card.appendChild(h2); card.appendChild(logEl);
+    card.appendChild(prog);
+    card.appendChild(go); card.appendChild(cp); card.appendChild(tip);
+    mask.appendChild(card);
+    document.body.appendChild(mask);
+    go.addEventListener('click', function () {
+      if (!url) { tip.textContent = '未获取到下载地址，请点击「复制下载链接」在浏览器中打开。'; return; }
+      NATIVE_UI = { prog: prog, fill: progFill, txt: progTxt, go: go, tip: tip };
+      prog.classList.add('on', 'indet');
+      progFill.style.width = '0%';
+      progTxt.textContent = '正在下载更新包…';
+      go.disabled = true; go.textContent = '下载中，请稍候…';
+      tip.textContent = '正在应用内下载，完成后会自动弹出安装界面。';
+      try {
+        NATIVE.downloadUpdate(url, String(info.sha256 || info.apkSha256 || ''), String(info.versionCode || ''));
+      } catch (e) {
+        go.disabled = false; go.textContent = '立即下载更新';
+        tip.textContent = '原生下载不可用，请点击「复制下载链接」在浏览器中手动下载。';
+      }
+    });
+    cp.addEventListener('click', function () {
+      copyText(url).then(function () { tip.textContent = '下载链接已复制：' + url; });
+    });
+  }
+
+  function checkForceUpdate() {
+    if (!UPDATE_MANIFEST_URL || EFFECTIVE_VERSION_CODE <= 0) return;
+    window.__WTA_UPDATE__ = function (info) {
+      try {
+        if (!info) return;
+        if (Number(info.versionCode || 0) > EFFECTIVE_VERSION_CODE) showForceUpdate(info);
+      } catch (e) {}
+    };
+    var tag = document.createElement('script');
+    tag.async = true;
+    tag.src = UPDATE_MANIFEST_URL + '?t=' + Date.now();
+    tag.onerror = function () { /* 服务器不可用：保持离线可用 */ };
+    (document.head || document.documentElement).appendChild(tag);
+  }
+
+  /* ---------- 底部标签栏追加 FM 电台 ---------- */
+  function ensureFmPanel() {
+    if (document.getElementById('fm365-panel')) return;
+    var box = document.createElement('div');
+    box.className = 'tab-panel';
+    box.id = 'fm365-panel';
+    var wrap = document.createElement('div');
+    wrap.className = 'fm365-wrap';
+    var frame = document.createElement('iframe');
+    frame.id = 'fm365Frame';
+    frame.setAttribute('allow', 'autoplay; encrypted-media; fullscreen');
+    frame.setAttribute('referrerpolicy', 'no-referrer');
+    frame.setAttribute('src', FM_URL);
+    wrap.appendChild(frame);
+    var tip = document.createElement('div');
+    tip.className = 'fm365-tip';
+    tip.innerHTML = '若页面空白或无法播放，可 <a href="' + FM_URL +
+      '" target="_blank" rel="noopener">在浏览器中打开</a>';
+    box.appendChild(wrap);
+    box.appendChild(tip);
+    var host = document.querySelector('.main-card') || document.body;
+    host.appendChild(box);
+  }
+
+  /* 捕获阶段先建面板，随后页面自身的点击逻辑再 showPanel 就能命中 */
+  var navHost = document.getElementById('navTabs');
+  if (navHost) {
+    navHost.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest ? e.target.closest('.nav-tab') : null;
+      if (b && b.getAttribute('data-tab') === 'fm365') ensureFmPanel();
+    }, true);
+  }
+
+  if (typeof tabsData !== 'undefined' && tabsData && tabsData.push) {
+    var exists = false;
+    for (var i = 0; i < tabsData.length; i++) {
+      if (tabsData[i].id === 'fm365') { exists = true; break; }
+    }
+    if (!exists) {
+      var fmTab = { id: 'fm365', label: 'FM电台', hideSearch: true };
+      if (tabsData.splice && tabsData.length > 0) tabsData.splice(1, 0, fmTab);
+      else tabsData.push(fmTab);
+      if (typeof renderTabs === 'function') renderTabs();
+    }
+  }
+
+  checkForceUpdate();
+})();
+</script>
+<!-- /TVBOX-EMBED:JS -->
+</body>
+</html>
