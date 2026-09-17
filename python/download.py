@@ -12,7 +12,7 @@ import sys
 import time
 
 # ================== 用户配置区（改这里就行） ==================
-DOWNLOAD_URL = "https://pan.szfx.top/down.php/cb89a7e6a875c55b94101ec0ae46fbdb.zip"
+DOWNLOAD_URL = "https://mpimg.cn/down.php/90b41102f9f0c1f05f9f13ff0d36ba43.zip"
 
 # 保存目录（相对于仓库根目录）
 SAVE_DIR = "zip"
