@@ -1,65 +1,29 @@
-name: Do下载
+- name: Extract ZIP to repo root
+  run: |
+    set -e
+    unzip -o /tmp/archive.zip -d .
+    ls -la
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - master
+- name: Reset workflow files (avoid push rejection)
+  run: |
+    set -e
+    # 1. 让 ZIP 里的 workflow 文件回到仓库原始状态（未跟踪的直接删掉）
+    git checkout -- .github/workflows 2>/dev/null || true
+    git clean -fd .github/workflows 2>/dev/null || true
+    # 2. 确认没有 workflow 改动
+    git status --porcelain .github/workflows || true
 
-permissions:
-  contents: write
-
-jobs:
-  download-and-extract:
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Download ZIP
-        run: |
-          set -e
-          curl -fL -A "Mozilla/5.0" -e "https://mpimg.cn/" \
-            -o /tmp/archive.zip \
-            "https://mpimg.cn/down.php/0dd7e1a4bd90a2eb521f6e301983de88.zip"
-          ls -lh /tmp/archive.zip
-          file /tmp/archive.zip
-
-      - name: Verify ZIP
-        run: |
-          set -e
-          if ! unzip -t /tmp/archive.zip >/dev/null 2>&1; then
-            echo "::error::下载的文件不是有效 ZIP"
-            head -c 500 /tmp/archive.zip || true
-            exit 1
-          fi
-
-      - name: Extract ZIP to repo root
-        run: |
-          set -e
-          unzip -o /tmp/archive.zip -d .
-          ls -la
-
-      - name: Restore existing workflow files
-        run: |
-          set -e
-          # 不让 ZIP 覆盖仓库里的 .github/workflows，避免 push 被拒
-          if [ -d .github/workflows ]; then
-            git checkout -- .github/workflows || true
-          fi
-
-      - name: Commit and push
-        run: |
-          set -e
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "没有变化，跳过提交。"
-            exit 0
-          fi
-          git commit -m "Add files from ZIP"
-          git push
+- name: Commit and push
+  run: |
+    set -e
+    git config user.name "github-actions[bot]"
+    git config user.email "github-actions[bot]@users.noreply.github.com"
+    git add -A
+    # 再把 workflow 目录从暂存区移除，双保险
+    git reset HEAD .github/workflows 2>/dev/null || true
+    if git diff --cached --quiet; then
+      echo "没有变化，跳过提交。"
+      exit 0
+    fi
+    git commit -m "Add files from ZIP"
+    git push
