@@ -1,29 +1,43 @@
-- name: Extract ZIP to repo root
-  run: |
-    set -e
-    unzip -o /tmp/archive.zip -d .
-    ls -la
+name: Download and Extract ZIP
 
-- name: Reset workflow files (avoid push rejection)
-  run: |
-    set -e
-    # 1. 让 ZIP 里的 workflow 文件回到仓库原始状态（未跟踪的直接删掉）
-    git checkout -- .github/workflows 2>/dev/null || true
-    git clean -fd .github/workflows 2>/dev/null || true
-    # 2. 确认没有 workflow 改动
-    git status --porcelain .github/workflows || true
+# 触发方式：手动触发（也可根据需要改为 push 或其他事件）
+on:
+  workflow_dispatch:
 
-- name: Commit and push
-  run: |
-    set -e
-    git config user.name "github-actions[bot]"
-    git config user.email "github-actions[bot]@users.noreply.github.com"
-    git add -A
-    # 再把 workflow 目录从暂存区移除，双保险
-    git reset HEAD .github/workflows 2>/dev/null || true
-    if git diff --cached --quiet; then
-      echo "没有变化，跳过提交。"
-      exit 0
-    fi
-    git commit -m "Add files from ZIP"
-    git push
+# 如果需要将解压后的文件提交回仓库，需要写权限
+permissions:
+  contents: write
+
+jobs:
+  download-and-extract:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download ZIP file
+        run: |
+          echo "开始下载 ZIP 文件..."
+          curl -L -o downloaded_file.zip "https://mpimg.cn/down.php/444969b7417312313611ed35bd7cf6c8.zip"
+          echo "下载完成。"
+          
+      - name: Unzip to repository root
+        run: |
+          echo "开始解压到仓库根目录..."
+          unzip -o downloaded_file.zip -d .
+          echo "解压完成。"
+          
+      - name: Clean up ZIP file
+        run: |
+          rm -f downloaded_file.zip
+          
+      # 如果需要将解压出来的文件提交并推送到仓库，取消以下注释
+      # - name: Commit and push extracted files
+      #   run: |
+      #     git config --global user.name 'github-actions[bot]'
+      #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      #     git add .
+      #     # 如果解压后没有新文件，commit 会失败，所以加上允许空提交或判断
+      #     git commit -m "chore: download and extract zip file" || echo "没有变更需要提交"
+      #     git push
