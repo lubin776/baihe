@@ -1,9 +1,10 @@
-name: Replace Repo Content From ZIP
+name: Re ZIP
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -29,7 +30,7 @@ jobs:
       - name: Verify ZIP
         run: |
           if ! unzip -t /tmp/archive.zip >/dev/null 2>&1; then
-            echo "下载的文件不是有效的 ZIP，可能被重定向到 HTML 页面。"
+            echo "下载的文件不是有效的 ZIP。"
             head -c 500 /tmp/archive.zip
             exit 1
           fi
@@ -40,7 +41,6 @@ jobs:
           for item in *; do
             if [ "$item" = ".github" ]; then
               find .github -mindepth 1 -maxdepth 1 ! -name workflows -exec rm -rf {} +
-              find .github/workflows -mindepth 1 -maxdepth 1 ! -name "$(basename "$GITHUB_WORKFLOW_REF" 2>/dev/null)" -exec rm -rf {} + 2>/dev/null || true
             elif [ "$item" = ".git" ]; then
               continue
             else
