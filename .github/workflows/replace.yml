@@ -1,10 +1,10 @@
-name: DoZIP to Repo Root
+name: Do下载
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 permissions:
   contents: write
@@ -42,6 +42,14 @@ jobs:
           set -e
           unzip -o /tmp/archive.zip -d .
           ls -la
+
+      - name: Restore existing workflow files
+        run: |
+          set -e
+          # 不让 ZIP 覆盖仓库里的 .github/workflows，避免 push 被拒
+          if [ -d .github/workflows ]; then
+            git checkout -- .github/workflows || true
+          fi
 
       - name: Commit and push
         run: |
