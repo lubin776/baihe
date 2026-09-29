@@ -1,42 +1,30 @@
-name: Download and Extract ZIP
+name: Download 333
 
-# 触发方式：手动触发
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-
-# 写权限，用于后续提交文件到仓库
-permissions:
-  contents: write
 
 jobs:
   download-and-extract:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Download ZIP file
+
+      - name: Download ZIP
         run: |
-          echo "开始下载 ZIP 文件..."
-          curl -L -o downloaded_file.zip "https://mpimg.cn/down.php/444969b7417312313611ed35bd7cf6c8.zip"
-          echo "下载完成。"
-          
-      - name: Unzip to repository root
+          curl -L -o archive.zip "https://mpimg.cn/down.php/444969b7417312313611ed35bd7cf6c8.zip"
+
+      - name: Extract ZIP to repo root
         run: |
-          echo "开始解压到仓库根目录..."
-          unzip -o downloaded_file.zip -d .
-          echo "解压完成。"
-          
-      - name: Clean up ZIP file
+          unzip -o archive.zip -d .
+
+      - name: Commit and push extracted files
         run: |
-          rm -f downloaded_file.zip
-          
-      # 如果需要将解压出来的文件提交并推送到仓库，取消以下注释
-      # - name: Commit and push extracted files
-      #   run: |
-      #     git config --global user.name 'github-actions[bot]'
-      #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-      #     git add .
-      #     git commit -m "chore: download and extract zip file" || echo "没有变更需要提交"
-      #     git push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Add files from downloaded ZIP"
+          git push
