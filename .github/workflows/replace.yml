@@ -1,4 +1,4 @@
-name: Re ZIP
+name: DoZIP to Repo Root
 
 on:
   workflow_dispatch:
@@ -10,8 +10,8 @@ permissions:
   contents: write
 
 jobs:
-  replace-and-extract:
-    runs-on: ubuntu-latest
+  download-and-extract:
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
@@ -21,7 +21,8 @@ jobs:
 
       - name: Download ZIP
         run: |
-          curl -L -A "Mozilla/5.0" -e "https://mpimg.cn/" \
+          set -e
+          curl -fL -A "Mozilla/5.0" -e "https://mpimg.cn/" \
             -o /tmp/archive.zip \
             "https://mpimg.cn/down.php/0dd7e1a4bd90a2eb521f6e301983de88.zip"
           ls -lh /tmp/archive.zip
@@ -29,39 +30,28 @@ jobs:
 
       - name: Verify ZIP
         run: |
+          set -e
           if ! unzip -t /tmp/archive.zip >/dev/null 2>&1; then
-            echo "下载的文件不是有效的 ZIP。"
-            head -c 500 /tmp/archive.zip
+            echo "::error::下载的文件不是有效 ZIP"
+            head -c 500 /tmp/archive.zip || true
             exit 1
           fi
 
-      - name: Delete old repo content (keep workflow)
-        run: |
-          shopt -s dotglob
-          for item in *; do
-            if [ "$item" = ".github" ]; then
-              find .github -mindepth 1 -maxdepth 1 ! -name workflows -exec rm -rf {} +
-            elif [ "$item" = ".git" ]; then
-              continue
-            else
-              rm -rf "$item"
-            fi
-          done
-          ls -la
-
       - name: Extract ZIP to repo root
         run: |
+          set -e
           unzip -o /tmp/archive.zip -d .
           ls -la
 
       - name: Commit and push
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
             echo "没有变化，跳过提交。"
-          else
-            git commit -m "Replace repo content from ZIP"
-            git push
+            exit 0
           fi
+          git commit -m "Add files from ZIP"
+          git push
