@@ -1,4 +1,4 @@
- name: Replace Repo Content From ZIP
+name:jk ZIP
 
 on:
   workflow_dispatch:
@@ -39,7 +39,6 @@ jobs:
           shopt -s dotglob
           for item in *; do
             if [ "$item" = ".github" ]; then
-              # 保留 .github/workflows，但清掉其它 .github 内容
               find .github -mindepth 1 -maxdepth 1 ! -name workflows -exec rm -rf {} +
               find .github/workflows -mindepth 1 -maxdepth 1 ! -name "$(basename "$GITHUB_WORKFLOW_REF" 2>/dev/null)" -exec rm -rf {} + 2>/dev/null || true
             elif [ "$item" = ".git" ]; then
