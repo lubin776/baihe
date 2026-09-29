@@ -1,10 +1,10 @@
 name: Download and Extract ZIP
 
-# 触发方式：手动触发（也可根据需要改为 push 或其他事件）
+# 触发方式：手动触发
 on:
   workflow_dispatch:
 
-# 如果需要将解压后的文件提交回仓库，需要写权限
+# 写权限，用于后续提交文件到仓库
 permissions:
   contents: write
 
@@ -38,6 +38,5 @@ jobs:
       #     git config --global user.name 'github-actions[bot]'
       #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       #     git add .
-      #     # 如果解压后没有新文件，commit 会失败，所以加上允许空提交或判断
       #     git commit -m "chore: download and extract zip file" || echo "没有变更需要提交"
       #     git push
